@@ -1,4 +1,4 @@
-Country,Including NMSC Number, Including NMSC Rate,Excluding NMSC Number,Excluding NMSC Rate,NumericCode,Latitude,Longitude
+Country,IncludingNMSCNumber, IncludingNMSCRate,ExcludingNMSCNumber,ExcludingNMSCRate,NumericCode,Latitude,Longitude
 Poland,"119,992",133.1,"118,982",132.4,616,52.215933,19.134422
 Belarus,"22,644",123.5,"22,529",123,112,53.4250605,27.6971358
 Latvia,"5,872",122.9,"5,808",122.1,428,56.8406494,24.7537645

@@ -14,7 +14,7 @@
         margin-right: 5px;
       }
     </style>
-  </head>
+ </head>
   <body>
     <h1 class="title">Global Cancer Mortality Map</h1>
     
@@ -40,14 +40,14 @@
                         "url": "cancer_mortality.csv",
                     },
                     "key": "NumericCode",
-                    "fields": ["Country","Including NMSC Rate"]
+                    "fields": ["Country","IncludingNMSCRate"]
                 }
             }
         ],
         mark: { type: "geoshape", stroke: "black", strokeWidth: 0.5 },
         encoding: {
             color: {
-                field: "Including NMSC Rate",
+                field: "IncludingNMSCRate",
                 type: "quantitative",
                 scale: { scheme: "reds" },
                 legend: { 
@@ -55,7 +55,7 @@
                 },
                 tooltip: [
                     { field: "Country", type: "nominal"},
-                    { field: "Including NMSC Rate", type: "quantitative" }
+                    { field: "IncludingNMSCRate", type: "quantitative" }
                 ]
             }
         }
