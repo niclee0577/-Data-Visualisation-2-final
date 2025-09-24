@@ -16,48 +16,55 @@
     </style>
   </head>
   <body>
-    <h1>Template for Embedding Vega-Lite Visualization</h1>
+    <h1 class="title">Global Cancer Mortality Map</h1>
+    
+    
     <!-- Container for the visualization -->
     <div id="vis"></div>
 
     <script>
-      // Assign the specification to a local variable vlSpec.
-      var vlSpec = {
-        $schema: 'https://vega.github.io/schema/vega-lite/v6.json',
+        var vlSpec = {
+        $schema: "https://vega.github.io/schema/vega-lite/v6.json",
+        width: 900,
+        height: 500,
+        projection: { type: "equalEarth" },
         data: {
-          values: [
-            {a: 'C', b: 2},
-            {a: 'C', b: 7},
-            {a: 'C', b: 4},
-            {a: 'D', b: 1},
-            {a: 'D', b: 2},
-            {a: 'D', b: 6},
-            {a: 'E', b: 8},
-            {a: 'E', b: 4},
-            {a: 'E', b: 7},
-          ],
+            url: "https://vega.github.io/vega-datasets/data/world-110m.json",
+            format: { type: "topojson", feature: "countries" }
         },
-        mark: 'bar',
+        "transform" : [ 
+            {
+                "lookup": "id",
+                "from": {
+                    "data": {
+                        "url": "cancer_mortality.csv",
+                    },
+                    "key": "NumericCode",
+                    "fields": ["Country","Including NMSC Rate"]
+                }
+            }
+        ],
+        mark: { type: "geoshape", stroke: "black", strokeWidth: 0.5 },
         encoding: {
-          y: {field: 'a', type: 'nominal'},
-          x: {
-            aggregate: 'average',
-            field: 'b',
-            type: 'quantitative',
-            axis: {
-              title: 'Average of b',
-            },
-          },
-        },
-      };
-      // Embed the visualization in the container with id `vis`
-      vegaEmbed('#vis', vlSpec);
+            color: {
+                field: "Including NMSC Rate",
+                type: "quantitative",
+                scale: { scheme: "reds" },
+                legend: { 
+                    title: "Cancer Deaths per 100k"
+                },
+                tooltip: [
+                    { field: "Country", type: "nominal"},
+                    { field: "Including NMSC Rate", type: "quantitative" }
+                ]
+            }
+        }
+    };
+        vegaEmbed("#vis", vlSpec, { actions: false });
      </script>
   </body>
-
 </head>
-
-
-
-
 </html>
+
+
+
