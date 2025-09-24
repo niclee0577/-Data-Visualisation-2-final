@@ -52,10 +52,6 @@
                 scale: { scheme: "reds" },
                 legend: { 
                     title: "Cancer Deaths per 100k"
-                },
-                condition: {
-                    test: "datum['IncludingNMSCRate'] == null",
-                    value: "lightgray"
                 }
             },
             tooltip: [
@@ -63,6 +59,11 @@
                 { field: "Country", type: "nominal"},
                 { field: "IncludingNMSCRate", type: "quantitative" }
             ]
+        },
+        "config": {
+            mark: {
+                invalid: { color: "lightgray" }
+            }
         }
     };
         vegaEmbed("#vis", vlSpec, { actions: false });
