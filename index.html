@@ -47,9 +47,13 @@
         mark: { type: "geoshape", stroke: "black", strokeWidth: 0.5 },
         encoding: {
             color: {
+                condition : {
+                    test: "datum['IncludingNMSCRate'] != null",
                 field: "IncludingNMSCRate",
                 type: "quantitative",
                 scale: { scheme: "reds" },
+                },
+                value: "lightgray",
                 legend: { 
                     title: "Cancer Deaths per 100k"
                 }
@@ -60,11 +64,6 @@
                 { field: "IncludingNMSCRate", type: "quantitative" }
             ]
         },
-        "config": {
-            mark: {
-                invalid: { color: "lightgray" }
-            }
-        }
     };
         vegaEmbed("#vis", vlSpec, { actions: false });
      </script>
