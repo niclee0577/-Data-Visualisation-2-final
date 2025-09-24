@@ -5,7 +5,9 @@ import pycountry
 cancer_df = pd.read_csv('cancer_mortality.csv', encoding="cp1252")
 country_df = cancer_df['Country']
 geolocator = Nominatim(user_agent="geoapi")
-cancer_df.drop(columns=['ISO3'], inplace=True)
+cancer_df = cancer_df.drop(columns=["NumericCode", "Latitude", "Longitude"], errors='ignore')
+
+
 
 latitudes = []
 longitudes = []
@@ -23,12 +25,13 @@ for country in country_df:
         numeric_code.append(None)
 
 
-cancer_df["Numeric Code"] = numeric_code
+cancer_df["NumericCode"] = numeric_code
+
 cancer_df['Latitude'] = latitudes
 cancer_df['Longitude'] = longitudes
 
-cleaned_cancer_df = cancer_df.dropna(subset=['Latitude', 'Longitude', 'Numeric Code'])
-
+cleaned_cancer_df = cancer_df.dropna(subset=['Latitude', 'Longitude', 'NumericCode']).copy()
+cleaned_cancer_df["NumericCode"] = cleaned_cancer_df["NumericCode"].astype(int)
 cleaned_cancer_df.to_csv("cancer_mortality.csv", index=False, encoding="utf-8")
 
 
