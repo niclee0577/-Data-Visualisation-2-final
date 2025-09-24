@@ -53,14 +53,15 @@
                 legend: { 
                     title: "Cancer Deaths per 100k"
                 },
-                "condition": {
+                condition: {
                     test: "datum['Including NMSC Rate'] == null",
                     value: "lightgray"
-                },
-                tooltip: [
-                    { field: "Country", type: "nominal"},
-                    { field: "IncludingNMSCRate", type: "quantitative" }
-                ]
+                }
+            },
+            tooltip: [
+                { field: "Country", type: "nominal"},
+                { field: "IncludingNMSCRate", type: "quantitative" }
+            ]
             }
         }
     };
