@@ -28,42 +28,55 @@
         width: 900,
         height: 500,
         projection: { type: "equalEarth" },
-        data: {
-            url: "https://vega.github.io/vega-datasets/data/world-110m.json",
-            format: { type: "topojson", feature: "countries" }
-        },
-        "transform" : [ 
+        layer: [
             {
-                "lookup": "id",
-                "from": {
-                    "data": {
-                        "url": "cancer_mortality.csv",
-                    },
-                    "key": "NumericCode",
-                    "fields": ["Country","IncludingNMSCRate"]
-                }
-            }
-        ],
-        mark: { type: "geoshape", stroke: "black", strokeWidth: 0.5 },
-        encoding: {
-            color: {
-                condition : {
-                    test: "datum['IncludingNMSCRate'] != null",
-                field: "IncludingNMSCRate",
-                type: "quantitative",
-                scale: { scheme: "reds" },
-                },
-                value: "lightgray",
-                legend: { 
-                    title: "Cancer Deaths per 100k"
-                }
+            // Base map: all countries in light gray
+            data: {
+                url: "https://vega.github.io/vega-datasets/data/world-110m.json",
+                format: { "type": "topojson", "feature": "countries" }
             },
-            tooltip: [
-                { "field": "id", "type": "quantitative", "title": "TopoJSON id" },
-                { field: "Country", type: "nominal"},
-                { field: "IncludingNMSCRate", type: "quantitative" }
-            ]
-        },
+            mark: { "type": "geoshape", "fill": "lightgray", "stroke": "white" }
+            },
+            {
+                // choropleth layer
+            data: {
+                url: "https://vega.github.io/vega-datasets/data/world-110m.json",
+                format: { type: "topojson", feature: "countries" }
+            },
+            transform : [ 
+                {
+                    lookup: "id",
+                    from: {
+                        data: {
+                            "url": "cancer_mortality.csv",
+                        },
+                        key: "NumericCode",
+                        fields: ["Country","IncludingNMSCRate"]
+                    }
+                }
+            ],
+            mark: { type: "geoshape", stroke: "black", strokeWidth: 0.5 },
+            encoding: {
+                color: {
+                    condition : {
+                        test: "datum['IncludingNMSCRate'] != null",
+                        field: "IncludingNMSCRate",
+                        type: "quantitative",
+                        scale: { scheme: "reds" },
+                    },
+                    value: "lightgray",
+                    legend: { 
+                        title: "Cancer Deaths per 100k"
+                    }
+                },
+                tooltip: [
+                    { "field": "id", "type": "quantitative", "title": "TopoJSON id" },
+                    { field: "Country", type: "nominal"},
+                    { field: "IncludingNMSCRate", type: "quantitative" }
+                ]
+            },
+        }
+    ]
     };
         vegaEmbed("#vis", vlSpec, { actions: false });
      </script>
