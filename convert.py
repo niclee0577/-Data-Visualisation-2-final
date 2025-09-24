@@ -5,7 +5,7 @@ import pycountry
 cancer_df = pd.read_csv('cancer_mortality.csv', encoding="cp1252")
 country_df = cancer_df['Country']
 geolocator = Nominatim(user_agent="geoapi")
-cancer_df = cancer_df.drop(columns=["NumericCode", "Latitude", "Longitude"], errors='ignore')
+cancer_df = cancer_df.drop(columns=["Numeric Code", "Latitude", "Longitude"], errors='ignore')
 
 
 
