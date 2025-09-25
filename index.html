@@ -21,13 +21,14 @@
     
     
     <!-- Container for the visualization -->
-    <div id="vis"></div>
+    <div id="vis" class="map-graph"></div>
 
     <script>
         var vlSpec = {
         $schema: "https://vega.github.io/schema/vega-lite/v6.json",
         width: 900,
         height: 500,
+        position: "center",
         projection: { type: "equalEarth" },
         layer: [
             {
