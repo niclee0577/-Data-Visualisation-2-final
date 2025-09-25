@@ -7,4 +7,11 @@ body {
 h1.title {
     text-align: center;
     color: #3d0477;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.map-graph {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
