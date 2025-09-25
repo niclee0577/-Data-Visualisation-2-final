@@ -59,16 +59,10 @@
             mark: { type: "geoshape", stroke: "black", strokeWidth: 0.5 },
             encoding: {
                 color: {
-                    condition : {
-                        test: "datum['IncludingNMSCRate'] != null",
-                        field: "IncludingNMSCRate",
-                        type: "quantitative",
-                        scale: { scheme: "reds" },
-                    },
-                    value: "lightgray",
-                    legend: { 
-                        title: "Cancer Mortality Age-Standardised Rates (ASR)"
-                    }
+                    field: "IncludingNMSCRate",
+                    type: "quantitative",
+                    scale: { scheme: "reds" },
+                    legend: { title: "Cancer Mortality\nAge-Standardised Rates (ASR)", titleFontSize: 12, labelFontSize: 10 }
                 },
                 tooltip: [
                     { field: "Country", type: "nominal", title: "Country" },
