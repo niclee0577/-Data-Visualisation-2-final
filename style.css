@@ -5,6 +5,7 @@ body {
 }
 
 h1.title {
+    width: 400px;
     text-align: center;
     color: #3d0477;
 }
