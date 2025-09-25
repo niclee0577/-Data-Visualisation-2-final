@@ -17,7 +17,7 @@
     </style>
  </head>
   <body>
-    <h1 class="title">Global Cancer Mortality Map</h1>
+    <h1 class="title">Global Cancer Mortality Rate (2022)</h1>
     
     <div class="map-graph">
         <div id="vis" ></div>
@@ -67,13 +67,12 @@
                     },
                     value: "lightgray",
                     legend: { 
-                        title: "Cancer Deaths per 100k"
+                        title: "Cancer Mortality Age-Standardised Rates (ASR)"
                     }
                 },
                 tooltip: [
-                    { "field": "id", "type": "quantitative", "title": "TopoJSON id" },
-                    { field: "Country", type: "nominal"},
-                    { field: "IncludingNMSCRate", type: "quantitative" }
+                    { field: "Country", type: "nominal", title: "Country" },
+                    { field: "IncludingNMSCRate", type: "quantitative", title: "Cancer Mortality (ASR)" }
                 ]
             },
         }
