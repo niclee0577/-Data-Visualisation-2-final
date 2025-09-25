@@ -17,7 +17,8 @@
     </style>
  </head>
   <body>
-    <h1 class="title">Global Cancer Mortality Age-Standardised Rates (ASR) (2022)</h1>
+    <h1 class="title">Global Cancer Mortality ASR (2022)</h1>
+    <h5 class="subtitle"> * ASR = Age-Standardized Rate cancer mortality per 100,000 population in 2022</h3>
     
     <div class="map-graph">
         <div id="vis" ></div>
@@ -62,11 +63,11 @@
                     field: "IncludingNMSCRate",
                     type: "quantitative",
                     scale: { scheme: "reds" },
-                    legend: { title: "Cancer Mortality ASR", titleFontSize: 11,}
+                    legend: { title: "Cancer Mortality (ASR)", titleFontSize: 10, titlelimit: 200}
                 },
                 tooltip: [
                     { field: "Country", type: "nominal", title: "Country" },
-                    { field: "IncludingNMSCRate", type: "quantitative", title: "Cancer Mortality (ASR)" }
+                    { field: "IncludingNMSCRate", type: "quantitative", title: "Cancer Mortality (ASR)"}
                 ]
             },
         }
