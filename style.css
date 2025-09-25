@@ -13,10 +13,13 @@ h1.title {
 
 h5.subtitle {
     text-align: center;
-    color: #3d0477;
+    margin-right: 500px;
+    color: #3e047784;
     font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-size: 15px;
     font-style: normal;
+    margin-top: 0px;
+    margin-bottom: 5px;
 }
 
 .map-graph {
