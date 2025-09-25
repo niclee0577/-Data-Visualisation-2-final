@@ -1,11 +1,9 @@
 body {
     font-family: Arial, sans-serif;
     margin: 20px;
-    background-color: #f9f9f9;
 }
 
 h1.title {
-    width: 400px;
     text-align: center;
     color: #3d0477;
 }
