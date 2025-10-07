@@ -17,8 +17,8 @@
     </style>
  </head>
   <body>
-    <h1 class="title">new Global Cancer Mortality ASR (2022)</h1>
-    <h5 class="subtitle"> * ASR = Age-Standardized Rate cancer mortality per 100,000 population in 2022</h3>
+    <h1 class="title">Global Cancer information (2022)</h1>
+    <h5 class="subtitle"> * ASR = Age-Standardized Rate cancer prevalence cases per 100,000 population in 2022</h3>
     
     <div class="map-graph">
         <div id="vis" ></div>
@@ -68,11 +68,11 @@
                     field: "PrevalenceCases",
                     type: "quantitative",
                     scale: { scheme: "reds", domain: [20, 200], extend: [0.2, 1]},
-                    legend: { title: "Cancer Mortality (ASR)", titleFontSize: 10, titlelimit: 200}
+                    legend: { title: "Cancer Prevalence Cases (ASR)", titleFontSize: 10, titlelimit: 200}
                 },
                 tooltip: [
                     { field: "Country", type: "nominal", title: "Country" },
-                    { field: "PrevalenceCases", type: "quantitative", title: "Cancer Mortality (ASR)"}
+                    { field: "PrevalenceCases", type: "quantitative", title: "Cancer Prevalence Cases (ASR)"}
                 ]
             },
             selection: {
