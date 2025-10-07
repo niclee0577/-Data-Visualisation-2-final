@@ -56,7 +56,11 @@
                         fields: ["Country","IncludingNMSCRate"]
                     }
                 },
-                {"filter": {"selection": "country_sel"}}
+                {
+                    filter: {
+                        selection: "country_sel"
+                    }
+                }
             ],
             mark: { type: "geoshape", stroke: "black", strokeWidth: 0.5 },
             encoding: {
