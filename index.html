@@ -50,10 +50,10 @@
                     lookup: "id",
                     from: {
                         data: {
-                            "url": "cancer_mortality_updt.csv",
+                            "url": "prevalence_mortality_updt.csv",
                         },
                         key: "NumericCode",
-                        fields: ["Country","IncludingNMSCRate"]
+                        fields: ["Country","Prevalence Cases"]
                     }
                 },
                 {
@@ -65,14 +65,14 @@
             mark: { type: "geoshape", stroke: "black", strokeWidth: 0.5 },
             encoding: {
                 color: {
-                    field: "IncludingNMSCRate",
+                    field: "Prevalence Cases",
                     type: "quantitative",
                     scale: { scheme: "reds", domain: [20, 200], extend: [0.2, 1]},
                     legend: { title: "Cancer Mortality (ASR)", titleFontSize: 10, titlelimit: 200}
                 },
                 tooltip: [
                     { field: "Country", type: "nominal", title: "Country" },
-                    { field: "IncludingNMSCRate", type: "quantitative", title: "Cancer Mortality (ASR)"}
+                    { field: "Prevalence Cases", type: "quantitative", title: "Cancer Mortality (ASR)"}
                 ]
             },
             selection: {
