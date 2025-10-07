@@ -4,6 +4,8 @@ body {
     background-color: #e5cefcfe;
 }
 
+
+
 h1.title {
     text-align: center;
     color: #3d0477;
@@ -11,9 +13,16 @@ h1.title {
     font-size: 40px
 }
 
+h2.title {
+    text-align: left;
+    margin;
+    color: #3d0477;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 25px
+}
+
 h5.subtitle {
-    text-align: center;
-    margin-right: 500px;
+    text-align: left;
     color: #3e047784;
     font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-size: 15px;
@@ -24,6 +33,30 @@ h5.subtitle {
 
 .map-graph {
     display: flex;
+    justify-content: left;
+    align-items: left;
+}
+
+.content {
+    display: flex;
+    height: 100vh;
+    border: none;
+    margin-left: 150px;
+    margin-right: 50px;
+}
+
+.chart {
+    flex: 1;
+    display: flex;
     justify-content: center;
     align-items: center;
+    margin-left: 50px;
+    margin-right: 50px;
+    border: none;
+}
+.iframe {
+    border: none;
+    width: 100%;
+    height: 600px;
+    box-shadow: none;
 }

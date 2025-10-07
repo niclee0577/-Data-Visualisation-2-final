@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Global Cancer information (2022)</title>
+    <script src="https://cdn.jsdelivr.net/npm/vega@6.2.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@6.4.1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@7.0.2"></script>
+    <link rel="stylesheet" href="style.css">
+
+     <style media="screen">
+      .vega-actions a {
+        margin-right: 5px;
+      }
+    </style>
+
+ </head>
+  <body>
+    <h2 class="title">Global Cancer Prevalence Cases (2022)</h1>
+    <h5 class="subtitle"> * ASR = Age-Standardized Rate cancer prevalence cases per 100,000 population in 2022</h3>
+    
+    <div class="map-graph">
+        <div id="choropleth_map" ></div>
+        <div id="slope_graph" ></div>
+    </div>
+    <script>
+        var vlSpec = {
+        $schema: "https://vega.github.io/schema/vega-lite/v6.json",
+        width: 900,
+        height: 500,
+        position: "center",
+        projection: { type: "equalEarth" },
+        layer: [
+            {
+            // Base map: all countries in light gray
+            data: {
+                url: "https://vega.github.io/vega-datasets/data/world-110m.json",
+                format: { "type": "topojson", "feature": "countries" }
+            },
+            mark: { "type": "geoshape", "fill": "lightgray", "stroke": "white" }
+            },
+            {
+            // choropleth layer
+            data: {
+                url: "https://vega.github.io/vega-datasets/data/world-110m.json",
+                format: { type: "topojson", feature: "countries" }
+            },
+            transform : [ 
+                {
+                    lookup: "id",
+                    from: {
+                        data: {
+                            url: "prevalence_mortality_updt.csv",
+                        },
+                        key: "NumericCode",
+                        fields: ["Country","PrevalenceCases"]
+                    }
+                },
+                {
+                    filter: {
+                        selection: "country_sel"
+                    }
+                }
+            ],
+            mark: { type: "geoshape", stroke: "black", strokeWidth: 0.5 },
+            encoding: {
+                color: {
+                    field: "PrevalenceCases",
+                    type: "quantitative",
+                    scale: { scheme: "reds", domain: [60, 120, 180, 240, 300, 420], extend: [0.2, 1]},
+                    legend: { title: "Cancer Prevalence Cases (ASR)", titleFontSize: 10, titlelimit: 200}
+                },
+                tooltip: [
+                    { field: "Country", type: "nominal", title: "Country" },
+                    { field: "PrevalenceCases", type: "quantitative", title: "Cancer Prevalence Cases (ASR)"}
+                ]
+            },
+            selection: {
+                country_sel: {
+                    type: "single",
+                    on: "click",
+                    fields: ["Country"],
+                    empty: "all"
+            }
+        }
+    }
+    ]
+    };
+        vegaEmbed("#choropleth_map", vlSpec, { actions: false });
+     </script>
+  </body>
+</html>
+
+
+
