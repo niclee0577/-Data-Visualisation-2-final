@@ -55,7 +55,8 @@
                         key: "NumericCode",
                         fields: ["Country","IncludingNMSCRate"]
                     }
-                }
+                },
+                {"filter": {"selection": "country_sel"}}
             ],
             mark: { type: "geoshape", stroke: "black", strokeWidth: 0.5 },
             encoding: {
@@ -70,7 +71,15 @@
                     { field: "IncludingNMSCRate", type: "quantitative", title: "Cancer Mortality (ASR)"}
                 ]
             },
+            selection: {
+                "country_sel": {
+                "type": "single",
+                "on": "click",
+                "fields": ["Country"],
+                "empty": "all"
+            }
         }
+    }
     ]
     };
         vegaEmbed("#vis", vlSpec, { actions: false });
