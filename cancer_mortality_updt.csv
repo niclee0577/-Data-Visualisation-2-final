@@ -1,4 +1,4 @@
-Country,IncludingNMSCNumber, IncludingNMSCRate,ExcludingNMSCNumber,ExcludingNMSCRate,NumericCode,Latitude,Longitude
+Country,IncludingNMSCNumber,IncludingNMSCRate,ExcludingNMSCNumber,ExcludingNMSCRate,NumericCode,Latitude,Longitude
 Afghanistan,"16,923",78.7,"16,712",77.5,4,33.7680065,66.2385139
 Albania,"4,955",90.5,"4,900",89.8,8,41.000028,19.9999619
 Algeria,"35,778",77.7,"35,347",76.8,12,28.0000272,2.9999825
