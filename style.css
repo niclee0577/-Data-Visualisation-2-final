@@ -15,7 +15,6 @@ h1.title {
 
 h2.title {
     text-align: left;
-    margin;
     color: #3d0477;
     font-family: 'Times New Roman', Times, serif;
     font-size: 25px
@@ -37,11 +36,25 @@ h5.subtitle {
     align-items: left;
 }
 
-.content {
+.slope-graph {
     display: flex;
-    height: 100vh;
+    justify-content: left;
+    align-items: left;
+}
+
+.content_map {
+    display: flex;
+    height: 75vh;
     border: none;
-    margin-left: 150px;
+    margin-left: 200px;
+    margin-right: 50px;
+}
+
+.content_slope {
+    display: flex;
+    height: 71vh;
+    border: none;
+    margin-left: 200px;
     margin-right: 50px;
 }
 
