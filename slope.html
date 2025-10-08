@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Global Cancer information (2022)</title>
+    <script src="https://cdn.jsdelivr.net/npm/vega@6.2.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@6.4.1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@7.0.2"></script>
+    <link rel="stylesheet" href="style.css">
+
+     <style media="screen">
+      .vega-actions a {
+        margin-right: 5px;
+      }
+    </style>
+
+ </head>
+  <body>
+    <h2 class="title">Global Cancer Prevalence Cases (2022)</h1>
+    
+    <div class="slope-graph">
+        <div id="slope" ></div>
+    </div>
+    <script>
+        var vlSpec = {
+        $schema: "https://vega.github.io/schema/vega-lite/v6.json",
+        width: 900,
+        height: 500,
+        position: "center",
+        
+        data: { url: "slope.csv" },
+        mark: { type: "line", point: true },
+        encoding: {
+            x: { 
+                field: "Measure", 
+                type: "nominal",
+                sort: ["Incidence", "Mortality"],
+                axis: { title: "Type of Cancer Case"} 
+            },
+            y: { 
+                field: "Cancer ASR rate", 
+                type: "quantitative", 
+                axis: { title: "Cancer ASR rate" } 
+            },
+            color: { 
+                field: "Country", 
+                type: "nominal", 
+                legend: { title: "Country"}
+            },
+            detail: { field: "Country" },
+            tooltip: [
+                { field: "Country", type: "nominal", title: "Country" },
+                { field: "Measure", type: "nominal", title: "Type" },
+                { field: "Cancer ASR rate", type: "quantitative", title: "Cancer ASR rate" }
+            ]
+        }
+    };
+        
+        vegaEmbed("#slope", vlSpec, { actions: false });
+     </script>
+  </body>
+</html>
