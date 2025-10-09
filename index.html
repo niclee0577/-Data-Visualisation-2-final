@@ -115,7 +115,7 @@
                 field: "Measure",
                 type: "nominal",
                 sort: ["Incidence","Mortality"],
-                scale: { paddingInner: 0, paddingOuter: 0, align: "center" },
+                scale: { paddingInner: 0, paddingOuter: 0.5, align: "center" },
                 axis: {
                     domain: false,
                     ticks: false, 
@@ -133,8 +133,8 @@
                 type: "quantitative",
                 axis: { 
                     title: "Age-Standardized Rate (per 100,000 population)",
-                    grid: true,          // horizontal gridlines
-                    tickCount: 6,        // number of ticks (adjust as needed)
+                    grid: true,          
+                    tickCount: 6,       
                     labelFontSize: 11,
                     labelColor: "black",
                     gridColor: "grey",
