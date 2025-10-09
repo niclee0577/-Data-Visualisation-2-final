@@ -30,6 +30,9 @@
         height: 400,
         data: { url: "slope.csv" },
         transform: [
+            // 1) add jitter
+            { calculate: "random()", as: "jitter" },
+
             { joinaggregate: [
                 { op: "max", field: "Cancer ASR rate", as: "incidence" }
             ],
@@ -112,7 +115,8 @@
                     field: "Country",
                     type: "nominal"
                 },
-                color: {value: "black"}
+                color: {value: "black"},
+                dy: { expr: "(datum.jitter - 0.5) * 12" }
             }
         },
         {
@@ -132,7 +136,8 @@
                     field: "Country",
                     type: "nominal"
                 },
-                color: {value: "black"}
+                color: {value: "black"},
+                dy: { expr: "(datum.jitter - 0.5) * 12" }
             }
         }
     ]
