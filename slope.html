@@ -29,6 +29,9 @@
         width: 700,
         height: 400,
         data: { url: "slope.csv" },
+        config: {
+            view: { stroke: "transparent" }   
+        },
         transform: [
             { joinaggregate: [
                 { op: "max", field: "Cancer ASR rate", as: "incidence" }
