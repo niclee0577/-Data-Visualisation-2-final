@@ -32,7 +32,7 @@
         config: {
             view: { stroke: "transparent" }   
         },
-        background: "#3d0477",
+        background: "#e5cefcfe",
         transform: [
             { joinaggregate: [
                 { op: "max", field: "Cancer ASR rate", as: "incidence" }
@@ -67,7 +67,10 @@
             y: { 
                 field: "Cancer ASR rate",
                 type: "quantitative",
-                axis: null           
+                grid: true,          // horizontal gridlines
+                tickCount: 6,        // number of ticks (adjust as needed)
+                labelFontSize: 11,
+                labelColor: "black",          
             }
         },
         layer: [
@@ -119,7 +122,6 @@
         }
     ]
     };
-  
         vegaEmbed("#slope", vlSpec, { actions: false });
      </script>
   </body>
