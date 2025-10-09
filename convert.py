@@ -43,7 +43,7 @@ longitudes = []
 numeric_code = []
 for country in country_df:
     try:
-        country = normalize_country(country)
+        cancer_df["Country"] = cancer_df['Country'].normalize_country(country)
         numeric_code_value = int(pycountry.countries.lookup(country).numeric)
         print(f"Processing {country} with numeric code {numeric_code_value}")
         location = geolocator.geocode(country)

@@ -20,58 +20,32 @@ h2.title {
     font-size: 25px
 }
 
+.content {
+  display: flex;
+  flex-direction: column;    
+  align-items: flex-start;      
+  margin: 0 auto;            
+  padding: 0 10rem;          
+  max-width: 1200px;       
+  box-sizing: border-box;
+}
+
 h5.subtitle {
-    text-align: center;
-    color: #3e047784;
-    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    font-size: 15px;
-    font-style: normal;
-    margin-top: 0px;
-    margin-bottom: 5px;
-}
-
-.map-graph {
-    display: flex;
-    justify-content: left;
-    align-items: left;
-}
-
-.slope-graph {
-    display: flex;
-    justify-content: left;
-    align-items: left;
+  width: 100%;
+  text-align: left;      
+  margin-bottom: 1rem;
+  color: #3d0477;
+  opacity: 0.5;
+  font-family: 'Arial', sans-serif;
+  font-size: 16px;
 }
 
 .content_map {
-    display: flex;
-    align-items: center;
-    justify-items: center;
-    height: 75vh;
-    border: none;
-    margin-left: 200px;
-    margin-right: 50px;
+    width: 100%;              
+    max-width: 700px;          
+    flex: 1 1 auto;
 }
 
-.content_slope {
-    display: flex;
-    height: 73vh;
-    border: none;
-    margin-left: 200px;
-    margin-right: 50px;
-}
-
-.chart {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-left: 50px;
-    margin-right: 50px;
-    border: none;
-}
-.iframe {
-    border: none;
-    width: 100%;
-    height: 600px;
-    box-shadow: none;
+.vega-emded .vega-title {
+    text-anchor: start;
 }

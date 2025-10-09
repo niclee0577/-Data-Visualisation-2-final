@@ -13,38 +13,79 @@
   </style>
 </head>
 <body>
+<div class="header">
   <h1 class="title">Global Cancer Information (2022)</h1>
-  <h5 class="subtitle">* ASR = Age-Standardized Rate per 100,000 population</h5>
-  
-  <div class="content_map">
-    <div id="combined"></div>
-  </div>
+</div>
+
+<div class="content">
+    <h5 class="subtitle">* ASR = Age-Standardized Rate per 100,000 population</h5>
+    <div id="combined" class="content_map"></div>
+</div>
 
   <script>
     var vlSpec = {
-      $schema: "https://vega.github.io/schema/vega-lite/v6.json",
-
-      "params": [
+      $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+      config: { view: { stroke: null } },
+      background: "#e5cefcfe",
+      
+      params: [
         {
-            name: "selectedCountries",
+            name: "SelectedCountries",
             bind: {
-            input: "select",
-            options: ["Cambodia","Eritrea","Germany","South Sudan","Vietnam","United States"],
-            multiple: true,
-            size: 6
+                input: "select",
+                options: [
+                    "Afghanistan","Albania","Algeria","Angola","Argentina","Armenia",
+                    "Australia","Austria","Azerbaijan","Bahamas","Bahrain","Bangladesh",
+                    "Barbados","Belarus","Belgium","Belize","Benin","Bhutan","Bolivia",
+                    "Bosnia and Herzegovina","Botswana","Brazil","Brunei Darussalam",
+                    "Bulgaria","Burkina Faso","Burundi","Côte d'Ivoire","Cambodia",
+                    "Cameroon","Canada","Cabo Verde","Central African Republic","Chad",
+                    "Chile","China","Colombia","Comoros","Costa Rica","Croatia","Cuba",
+                    "Cyprus","Czech Republic","Denmark","Djibouti","Dominican Republic",
+                    "Ecuador","Egypt","El Salvador","Equatorial Guinea","Eritrea",
+                    "Estonia","Eswatini","Ethiopia","Fiji","Finland","French Guiana",
+                    "French Polynesia","Gabon","Gambia","Georgia","Germany","Ghana",
+                    "Greece","Guadeloupe","Guam","Guatemala","Guinea","Guinea-Bissau",
+                    "Guyana","Haiti","Honduras","Hungary","Iceland","India","Indonesia",
+                    "Iran","Iraq","Ireland","Israel","Italy","Jamaica","Japan","Jordan",
+                    "Kazakhstan","Kenya","Kuwait","Kyrgyzstan","Laos","Latvia","Lebanon",
+                    "Lesotho","Liberia","Libya","Lithuania","Luxembourg","Madagascar",
+                    "Malawi","Malaysia","Maldives","Mali","Malta","Martinique","Mauritania",
+                    "Mauritius","Mexico","Moldova","Mongolia","Montenegro","Morocco",
+                    "Mozambique","Myanmar","Namibia","Netherlands","New Caledonia",
+                    "New Zealand","Nicaragua","Niger","Nigeria","North Korea",
+                    "North Macedonia","Norway","Oman","Pakistan","Panama","Papua New Guinea",
+                    "Paraguay","Peru","Philippines","Poland","Portugal","Puerto Rico",
+                    "Qatar","Romania","Russian Federation","Rwanda","Saint Lucia","Samoa",
+                    "Sao Tome and Principe","Saudi Arabia","Senegal","Serbia","Sierra Leone",
+                    "Singapore","Slovakia","Slovenia","Solomon Islands","Somalia",
+                    "South Africa","South Korea","South Sudan","Spain","Sri Lanka","Sudan",
+                    "Suriname","Sweden","Syria","Tajikistan","Tanzania","Thailand","Togo",
+                    "Trinidad and Tobago","Tunisia","Türkiye","Turkmenistan","Uganda",
+                    "Ukraine","United Arab Emirates","United Kingdom","United States",
+                    "Uruguay","Uzbekistan","Vanuatu","Venezuela","Vietnam","Yemen",
+                    "Switzerland","Nepal","Zambia","Zimbabwe"
+                ],
+                multiple: true,
+                size: 180,
+                name: "Select Countries: "
             },
-            value: ["Cambodia","Germany"]   // default checked
+            value: ["Malaysia"]   // default checked
         }
     ],
 
-      vconcat: [
+    vconcat: [
         // Choropleth Map
         {
-          title: "Global Cancer Prevalence Cases (2022)",
-          titleFontColor: "#3d0477",
-          titleAlign: "left",
+          title: {
+            text: "Global Cancer Prevalence Cases (2022)",
+            fontSize: 20,
+            anchor: "start",
+            color: "#3d0477",
+          },
           width: 700,
           height: 400,
+          align: "left",
           projection: { type: "equalEarth" },
           layer: [
             {
@@ -52,7 +93,7 @@
                 url: "https://vega.github.io/vega-datasets/data/world-110m.json",
                 format: { type: "topojson", feature: "countries" }
               },
-              mark: { type: "geoshape", fill: "lightgray", stroke: "white" }
+              mark: { type: "geoshape", fill: "darkgray", stroke: "black", strokeWidth: 0.5 }
             },
             {
               data: {
@@ -68,10 +109,10 @@
                     fields: ["Country","PrevalenceCases"]
                   }
                 },
-                { filter: "indexof(selectedCountries, datum.Country) >= 0" }
+                { filter: "indexof(SelectedCountries, datum.Country) >= 0" }
 
               ],
-              mark: { type: "geoshape", stroke: "black", strokeWidth: 0.5 },
+              mark: { type: "geoshape", stroke: "black", strokeWidth: 1.5 },
               encoding: {
                 color: {
                   field: "PrevalenceCases",
@@ -90,14 +131,22 @@
 
         // Slope Graph
         {
-          title: "Global Cancer Incidence and Mortality Rate (2022)",
-          titleFontColor: "#3d0477",
-          titleAlign: "left",
+          title: {
+            text: "Global Cancer Incidence and Mortality Rate (2022)",
+            fontSize: 20,
+            anchor: "start",
+            color: "#3d0477",
+            offset: 20
+          },
           width: 700,
-          height: 400,
+          height: 400,          
           data: { url: "slope.csv" },
-          config: { view: { stroke: "transparent" } },
-          background: "#e5cefcfe",
+          config: {
+            view: {
+                stroke: null,
+                fill: "#e5cefcfe"
+            }
+        },
           transform: [
             {
               joinaggregate: [
@@ -111,7 +160,7 @@
               ],
               sort: [{ field: "incidence", order: "descending" }]
             },
-            { filter: "indexof(selectedCountries, datum.Country) >= 0" }
+            { filter: "indexof(SelectedCountries, datum.Country) >= 0" }
 
           ],
            encoding: {
@@ -119,7 +168,7 @@
                 field: "Measure",
                 type: "nominal",
                 sort: ["Incidence","Mortality"],
-                scale: { paddingInner: 0, paddingOuter: 0.5, align: "center" },
+                scale: { paddingInner: 0, paddingOuter: 0.5 },
                 axis: {
                     domain: false,
                     ticks: false, 
@@ -152,20 +201,65 @@
               mark: { type: "line", strokeWidth: 2 },
               encoding: {
                 detail: { field: "Country" },
-                color: { field: "Country", type: "nominal" }
+                color: { field: "Country", type: "nominal"}
               }
             },
             {
-              mark: { type: "point", filled: true },
+              mark: { type: "point", filled: true, size: 70},
               encoding: {
                 detail: { field: "Country" },
-                color: { field: "Country", type: "nominal" }
+                color: { field: "Country", type: "nominal" },
+                tooltip: [
+                    { field: "Country", type: "nominal" },
+                    { field: "Measure", type: "nominal" },
+                    { field: "Cancer ASR rate", type: "quantitative" }
+                ]
               }
             },
-            { mark: { type: "rule", stroke: "#888", strokeWidth: 0.5 }, encoding: { x: { datum: "Incidence" } } },
-            { mark: { type: "rule", stroke: "#888", strokeWidth: 0.5 }, encoding: { x: { datum: "Mortality" } } }
-          ]
+            {
+                mark: {
+                    type: "text",
+                    align: "left",
+                    baseline: "middle",
+                    dx: 5,
+                    dy: -5,
+                    fontSize: 15,
+                    fontWeight: "bold"
+                },
+                encoding: {
+                    x: { field: "Measure", type: "nominal" },
+                    y: { field: "Cancer ASR rate", type: "quantitative" },
+                    text: { field: "Cancer ASR rate", type: "quantitative", format: ".1f" },
+                    color: { field: "Country", type: "nominal" },
+                    detail: { field: "Country" }
+                }
+            },
+            {
+                mark: { 
+                    type: "rule", 
+                    stroke: "black", 
+                    strokeWidth: 1,
+                }, 
+                encoding: { 
+                    x: { datum: "Incidence",type: "nominal", band: 0.5},
+                    y: { datum: 0 },
+                    y2: { datum: 400 }
+                } 
+            },
+            {
+                mark: { 
+                    type: "rule", 
+                    stroke: "black", 
+                    strokeWidth: 1 
+                }, 
+            encoding: { 
+                x: { datum: "Mortality", type: "nominal", band: 0.5 },
+                y: { datum: 0 },
+                y2: { datum: 400 }
+            } 
         }
+    ]
+}
       ]
     };
 
