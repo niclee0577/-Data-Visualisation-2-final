@@ -24,14 +24,9 @@
 
       params: [
         {
-          name: "selectedCountries",
-          bind: {
-            input: "select",
-            options: ["Cambodia","Eritrea","Germany","South Sudan","Vietnam","United States"],
-            multiple: true,
-            size: 6
-          },
-          value: ["Cambodia","Germany"]   // default selection
+          name: "countrySelect",
+          select: { "type": "point", "fields": ["Country"] },
+          bind: "legend"
         }
       ],
 
@@ -65,7 +60,7 @@
                     fields: ["Country","PrevalenceCases"]
                   }
                 },
-                { filter: "indexof(selectedCountries, datum.Country) >= 0" }
+                { filter: { param: "countrySelect" } }
               ],
               mark: { type: "geoshape", stroke: "black", strokeWidth: 0.5 },
               encoding: {
@@ -106,7 +101,7 @@
               ],
               sort: [{ field: "incidence", order: "descending" }]
             },
-            { filter: "indexof(selectedCountries, datum.Country) >= 0" }
+            { filter: { param: "countrySelect" } }
           ],
           encoding: {
             x: {
