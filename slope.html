@@ -25,40 +25,105 @@
     <script>
         var vlSpec = {
         $schema: "https://vega.github.io/schema/vega-lite/v6.json",
+        autosize: { type: "pad", contains: "padding" },
         width: 700,
         height: 400,
-        position: "left",
-        
         data: { url: "slope.csv" },
-        mark: { type: "text", align: "left", dx:5 },
         encoding: {
             x: { 
-                field: "Measure", 
+                field: "Measure",
+                type: "nominal",
+                sort: ["Incidence","Mortality"],
+                axis: { 
+                    domain: false,
+                    ticks: false, 
+                    labels: true,
+                    labelFontSize: 12,
+                    labelPadding: 20,
+                    title: null
+                }
             },
             y: { 
-                field: "Cancer ASR rate",            
-            },
-            text: {
-                field: "Country", 
-            },
-            opacity: { 
-                condition: {test: "datum.Measure == 'Mortality'", "value": 1}, "value": 0
-            },
-            color: { 
-                field: "Country", 
-                type: "nominal", 
-                legend: null
+                field: "Cancer ASR rate",
+                type: "quantitative",
+                axis: null           
             }
+        },
+        layer: [
+            {
+            mark: { 
+                type: "line", 
+                strokeWidth: 1,
+                opacity: 0.3 
             },
-            detail: { field: "Country" },
-            tooltip: [
-                { field: "Country", type: "nominal", title: "Country" },
-                { field: "Measure", type: "nominal", title: "Type" },
-                { field: "Cancer ASR rate", type: "quantitative", title: "Cancer ASR rate", format: ".1f" }
-            ]
+            encoding: {
+                detail: { field: "Country" },
+                color: { 
+                    field: "Country", 
+                    type: "nominal", 
+                    legend: null
+                }
+            }
+        },
+        {
+            mark: { 
+                type: "point", 
+                filled: true, 
+                size: 30,
+                opacity: 0.6
+            },
+            encoding: {
+                detail: {field: "Country"},
+                color: { 
+                    field: "Country", 
+                    type: "nominal", 
+                    legend: null
+                }
+            }
+        },
+        {
+            transform: [{filter: "datum.Measure == 'Incidence'"}],
+            mark: { 
+                type: "text", 
+                align: "right",
+                dx: -5,
+                fontSize: 10,
+            },
+            encoding: {
+                y: { 
+                    field: "Cancer ASR rate",
+                    type: "quantitative"
+                },
+                text: {
+                    field: "Country",
+                    type: "nominal"
+                },
+                color: {value: "black"}
+            }
+        },
+        {
+            transform: [{filter: "datum.Measure == 'Mortality'"}],
+            mark: { 
+                type: "text", 
+                align: "left",
+                dx: 5,
+                fontSize: 10,
+            },
+            encoding: {
+                y: { 
+                    field: "Cancer ASR rate",
+                    type: "quantitative"
+                },
+                text: {
+                    field: "Country",
+                    type: "nominal"
+                },
+                color: {value: "black"}
+            }
         }
+    ]
     };
-        
+  
         vegaEmbed("#slope", vlSpec, { actions: false });
      </script>
   </body>
