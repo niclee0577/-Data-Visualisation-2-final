@@ -22,13 +22,18 @@
     var vlSpec = {
       $schema: "https://vega.github.io/schema/vega-lite/v6.json",
 
-      params: [
+      "params": [
         {
-          name: "countrySelect",
-          select: { "type": "point", "fields": ["Country"] },
-          bind: "legend"
+            name: "selectedCountries",
+            bind: {
+            input: "select",
+            options: ["Cambodia","Eritrea","Germany","South Sudan","Vietnam","United States"],
+            multiple: true,
+            size: 6
+            },
+            value: ["Cambodia","Germany"]   // default checked
         }
-      ],
+    ],
 
       vconcat: [
         // Choropleth Map
@@ -60,7 +65,8 @@
                     fields: ["Country","PrevalenceCases"]
                   }
                 },
-                { filter: { param: "countrySelect" } }
+                { filter: "indexof(selectedCountries, datum.Country) >= 0" }
+
               ],
               mark: { type: "geoshape", stroke: "black", strokeWidth: 0.5 },
               encoding: {
@@ -101,7 +107,8 @@
               ],
               sort: [{ field: "incidence", order: "descending" }]
             },
-            { filter: { param: "countrySelect" } }
+            { filter: "indexof(selectedCountries, datum.Country) >= 0" }
+
           ],
            encoding: {
             x: { 
