@@ -68,14 +68,16 @@
             y: { 
                 field: "Cancer ASR rate",
                 type: "quantitative",
-                grid: true,          // horizontal gridlines
-                tickCount: 6,        // number of ticks (adjust as needed)
-                labelFontSize: 11,
-                labelColor: "black",
-                gridColor: "black",
-                ticksColor: "black",
-                gridDash: [4,4],
-            }
+                axis: { 
+                    title: "Age-Standardized Rate (per 100,000 population)",
+                    grid: true,          // horizontal gridlines
+                    tickCount: 6,        // number of ticks (adjust as needed)
+                    labelFontSize: 11,
+                    labelColor: "black",
+                    gridColor: "black",
+                    ticksColor: "black",
+                    gridDash: [4,4],
+                }
         },
         layer: [
             {
