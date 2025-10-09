@@ -30,9 +30,6 @@
         height: 400,
         data: { url: "slope.csv" },
         transform: [
-            // 1) add jitter
-            { calculate: "random()", as: "jitter" },
-
             { joinaggregate: [
                 { op: "max", field: "Cancer ASR rate", as: "incidence" }
             ],
@@ -78,7 +75,12 @@
                 color: { 
                     field: "Country", 
                     type: "nominal", 
-                    legend: null
+                    legend: {
+                        title: "Country",
+                        orient: "right",
+                        labelFontSize: 10,
+                        symbolSize: 100
+                    }
                 }
             }
         },
@@ -94,7 +96,12 @@
                 color: { 
                     field: "Country", 
                     type: "nominal", 
-                    legend: null
+                    legend: {
+                        title: "Country",
+                        orient: "right",
+                        labelFontSize: 10,
+                        symbolSize: 100
+                    }
                 }
             }
         },
@@ -136,8 +143,7 @@
                     field: "Country",
                     type: "nominal"
                 },
-                color: {value: "black"},
-                dy: { expr: "(datum.jitter - 0.5) * 12" }
+                color: {value: "black"}
             }
         }
     ]
