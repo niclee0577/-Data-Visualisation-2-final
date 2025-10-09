@@ -103,18 +103,37 @@
             },
             { filter: { param: "countrySelect" } }
           ],
-          encoding: {
-            x: {
-              field: "Measure",
-              type: "nominal",
-              sort: ["Incidence","Mortality"],
-              scale: { paddingInner: 0, paddingOuter: 0 },
-              axis: { domain: false, ticks: false, labels: true, labelAngle: 0 }
+           encoding: {
+            x: { 
+                field: "Measure",
+                type: "nominal",
+                sort: ["Incidence","Mortality"],
+                scale: { paddingInner: 0, paddingOuter: 0, align: "center" },
+                axis: {
+                    domain: false,
+                    ticks: false, 
+                    labels: true,
+                    labelFontSize: 12,
+                    labelPadding: 20,
+                    title: null,
+                    labelAngle: 0,
+                    labelAlign: "center",
+                    labelBaseline: "top"
+                }
             },
-            y: {
-              field: "Cancer ASR rate",
-              type: "quantitative",
-              axis: { title: "ASR per 100,000", grid: true, tickCount: 6 }
+            y: { 
+                field: "Cancer ASR rate",
+                type: "quantitative",
+                axis: { 
+                    title: "Age-Standardized Rate (per 100,000 population)",
+                    grid: true,          // horizontal gridlines
+                    tickCount: 6,        // number of ticks (adjust as needed)
+                    labelFontSize: 11,
+                    labelColor: "black",
+                    gridColor: "grey",
+                    ticksColor: "grey",
+                    gridDash: [4,4],
+                }
             }
           },
           layer: [
