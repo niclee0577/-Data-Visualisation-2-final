@@ -30,29 +30,31 @@
         position: "left",
         
         data: { url: "slope.csv" },
-        mark: { type: "line", point: true },
+        mark: { type: "text", align: "left", dx:5 },
         encoding: {
             x: { 
                 field: "Measure", 
-                type: "nominal",
-                sort: ["Incidence", "Mortality"],
-                axis: { title: "Type of Cancer Case"} 
             },
             y: { 
-                field: "Cancer ASR rate", 
-                type: "quantitative", 
-                axis: { title: "Cancer ASR rate" } 
+                field: "Cancer ASR rate",            
+            },
+            text: {
+                field: "Country", 
+            },
+            opacity: { 
+                condition: {test: "datum.Measure == 'Mortality'", "value": 1}, "value": 0
             },
             color: { 
                 field: "Country", 
                 type: "nominal", 
-                legend: { title: "Country"}
+                legend: null
+            }
             },
             detail: { field: "Country" },
             tooltip: [
                 { field: "Country", type: "nominal", title: "Country" },
                 { field: "Measure", type: "nominal", title: "Type" },
-                { field: "Cancer ASR rate", type: "quantitative", title: "Cancer ASR rate" }
+                { field: "Cancer ASR rate", type: "quantitative", title: "Cancer ASR rate", format: ".1f" }
             ]
         }
     };
