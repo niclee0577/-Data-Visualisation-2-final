@@ -17,18 +17,32 @@
 
  </head>
   <body>
-    <h2 class="title">Global Cancer Prevalence Cases (2022)</h1>
+    <h2 class="title">Global Cancer Incidence and mortality rate (2022)</h2>
     
     <div class="slope-graph">
-        <div id="slope" ></div>
+        <div id="slope"></div>
     </div>
     <script>
         var vlSpec = {
         $schema: "https://vega.github.io/schema/vega-lite/v6.json",
-        autosize: { type: "pad", contains: "padding" },
+        autosize: { type: "pad", contains: "padding"},
         width: 700,
         height: 400,
         data: { url: "slope.csv" },
+        transform: [
+            { joinaggregate: [
+                { op: "max", field: "Cancer ASR rate", as: "incidence" }
+            ],
+            groupby: ["Country"]
+            },
+            { window: [
+                { op: "rank", field: "incidence", as: "rank" }
+            ],
+            sort: [{ field: "incidence", order: "descending" }]
+            },
+            { filter: "datum.rank <= 10" }
+            
+        ],
         encoding: {
             x: { 
                 field: "Measure",
@@ -57,7 +71,7 @@
                 opacity: 0.3 
             },
             encoding: {
-                detail: { field: "Country" },
+                detail: {field: "Country"},
                 color: { 
                     field: "Country", 
                     type: "nominal", 
