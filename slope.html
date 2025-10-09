@@ -17,7 +17,7 @@
 
  </head>
   <body>
-    <h2 class="title">Global Cancer Incidence and mortality rate (2022)</h2>
+    <h2 class="title">Global Cancer Incidence And Mortality Rate </h2>
     
     <div class="slope-graph">
         <div id="slope"></div>
@@ -27,7 +27,7 @@
         $schema: "https://vega.github.io/schema/vega-lite/v6.json",
         autosize: { type: "pad", contains: "padding"},
         width: 700,
-        height: auto,
+        height: 400,
         data: { url: "slope.csv" },
         transform: [
             { joinaggregate: [
