@@ -53,7 +53,7 @@
                 type: "nominal",
                 sort: ["Incidence","Mortality"],
                 scale: { paddingInner: 0, paddingOuter: 5, align: "left" },
-                axis: { 
+                axis: {
                     domain: false,
                     ticks: false, 
                     labels: true,
@@ -120,7 +120,7 @@
             }
         },
         {
-            mark: { type: "rule", stroke: "#888", strokeWidth: 0.5, opacity: 0.5 },
+            mark: { type: "rule", stroke: "#888", strokeWidth: 0.5, opacity: 0.5, xOffset: 5},
             encoding: { x: { datum: "Incidence" } }
         },
         {
