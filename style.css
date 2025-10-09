@@ -44,6 +44,8 @@ h5.subtitle {
 
 .content_map {
     display: flex;
+    align-items: center;
+    justify-items: center;
     height: 75vh;
     border: none;
     margin-left: 200px;
