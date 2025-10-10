@@ -28,6 +28,7 @@ h2.title {
   padding: 0 10rem;          
   max-width: 1200px;       
   box-sizing: border-box;
+  
 }
 
 h5.subtitle {
@@ -44,6 +45,7 @@ h5.subtitle {
     width: 100%;              
     max-width: 700px;          
     flex: 1 1 auto;
+    align-items: left;
 }
 
 .vega-emded .vega-title {

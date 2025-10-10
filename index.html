@@ -24,9 +24,10 @@
 
   <script>
     var vlSpec = {
-      $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+      $schema: "https://vega.github.io/schema/vega-lite/v6.json",
       config: { view: { stroke: null } },
       background: "#e5cefcfe",
+      center: true,  
       
       params: [
         {
@@ -82,11 +83,12 @@
             fontSize: 20,
             anchor: "start",
             color: "#3d0477",
+            offset: 20
           },
           width: 700,
           height: 400,
-          align: "left",
-          projection: { type: "equalEarth" },
+          projection: { type: "equalEarth"},
+
           layer: [
             {
               data: {
@@ -117,8 +119,9 @@
                 color: {
                   field: "PrevalenceCases",
                   type: "quantitative",
+                  align: "left",
                   scale: { scheme: "reds" },
-                  legend: { title: "Cancer Prevalence Cases (ASR)" }
+                  legend: { title: "Prevalence Cases (ASR)" }
                 },
                 tooltip: [
                   { field: "Country", type: "nominal" },
@@ -139,7 +142,7 @@
             offset: 20
           },
           width: 700,
-          height: 400,          
+          height: 400,         
           data: { url: "slope.csv" },
           config: {
             view: {
