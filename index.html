@@ -31,47 +31,15 @@
       
       params: [
         {
-            name: "SelectedCountries",
+            name: "SelectedContinents",
             bind: {
                 input: "select",
-                options: [
-                    "Afghanistan","Albania","Algeria","Angola","Argentina","Armenia",
-                    "Australia","Austria","Azerbaijan","Bahamas","Bahrain","Bangladesh",
-                    "Barbados","Belarus","Belgium","Belize","Benin","Bhutan","Bolivia",
-                    "Bosnia and Herzegovina","Botswana","Brazil","Brunei Darussalam",
-                    "Bulgaria","Burkina Faso","Burundi","Côte d'Ivoire","Cambodia",
-                    "Cameroon","Canada","Cabo Verde","Central African Republic","Chad",
-                    "Chile","China","Colombia","Comoros","Costa Rica","Croatia","Cuba",
-                    "Cyprus","Czech Republic","Denmark","Djibouti","Dominican Republic",
-                    "Ecuador","Egypt","El Salvador","Equatorial Guinea","Eritrea",
-                    "Estonia","Eswatini","Ethiopia","Fiji","Finland","French Guiana",
-                    "French Polynesia","Gabon","Gambia","Georgia","Germany","Ghana",
-                    "Greece","Guadeloupe","Guam","Guatemala","Guinea","Guinea-Bissau",
-                    "Guyana","Haiti","Honduras","Hungary","Iceland","India","Indonesia",
-                    "Iran","Iraq","Ireland","Israel","Italy","Jamaica","Japan","Jordan",
-                    "Kazakhstan","Kenya","Kuwait","Kyrgyzstan","Laos","Latvia","Lebanon",
-                    "Lesotho","Liberia","Libya","Lithuania","Luxembourg","Madagascar",
-                    "Malawi","Malaysia","Maldives","Mali","Malta","Martinique","Mauritania",
-                    "Mauritius","Mexico","Moldova","Mongolia","Montenegro","Morocco",
-                    "Mozambique","Myanmar","Namibia","Netherlands","New Caledonia",
-                    "New Zealand","Nicaragua","Niger","Nigeria","North Korea",
-                    "North Macedonia","Norway","Oman","Pakistan","Panama","Papua New Guinea",
-                    "Paraguay","Peru","Philippines","Poland","Portugal","Puerto Rico",
-                    "Qatar","Romania","Russian Federation","Rwanda","Saint Lucia","Samoa",
-                    "Sao Tome and Principe","Saudi Arabia","Senegal","Serbia","Sierra Leone",
-                    "Singapore","Slovakia","Slovenia","Solomon Islands","Somalia",
-                    "South Africa","South Korea","South Sudan","Spain","Sri Lanka","Sudan",
-                    "Suriname","Sweden","Syria","Tajikistan","Tanzania","Thailand","Togo",
-                    "Trinidad and Tobago","Tunisia","Türkiye","Turkmenistan","Uganda",
-                    "Ukraine","United Arab Emirates","United Kingdom","United States",
-                    "Uruguay","Uzbekistan","Vanuatu","Venezuela","Vietnam","Yemen",
-                    "Switzerland","Nepal","Zambia","Zimbabwe"
-                ],
+                options: ["Select All", "Asia", "Europe", "Africa", "North America", "Oceania", "South America"],
                 multiple: true,
                 size: 180,
-                name: "Select Countries: "
+                name: "Select Continents: "
             },
-            value: ["Malaysia"]   // default checked
+            value: ["Select All"]   // default checked
         }
     ],
 
@@ -86,7 +54,7 @@
             offset: 20
           },
           width: 700,
-          height: 400,
+          height: 500,
           projection: { type: "equalEarth"},
 
           layer: [
@@ -108,10 +76,10 @@
                   from: {
                     data: { url: "prevalence_mortality_updt.csv" },
                     key: "NumericCode",
-                    fields: ["Country","PrevalenceCases"]
+                    fields: ["Country","PrevalenceCases", "Continent"]
                   }
                 },
-                { filter: "indexof(SelectedCountries, datum.Country) >= 0" }
+                { filter: "indexof(SelectedContinents, 'Select All') >= 0 || indexof(SelectedContinents, datum.Continent) >= 0" }
 
               ],
               mark: { type: "geoshape", stroke: "black", strokeWidth: 1.5 },
@@ -135,14 +103,14 @@
         // Slope Graph
         {
           title: {
-            text: "Global Cancer Incidence and Mortality Rate (2022)",
+            text: "Global Cancer Incidence and Mortality Rate for each Continent (2022)",
             fontSize: 20,
             anchor: "start",
             color: "#3d0477",
             offset: 20
           },
           width: 700,
-          height: 400,         
+          height: 800,         
           data: { url: "slope.csv" },
           config: {
             view: {
@@ -163,7 +131,7 @@
               ],
               sort: [{ field: "incidence", order: "descending" }]
             },
-            { filter: "indexof(SelectedCountries, datum.Country) >= 0" }
+            { filter: "indexof(SelectedContinents, 'Select All') >= 0 || indexof(SelectedContinents, datum.Continent) >= 0" }
 
           ],
            encoding: {
@@ -171,12 +139,12 @@
                 field: "Measure",
                 type: "nominal",
                 sort: ["Incidence","Mortality"],
-                scale: { paddingInner: 0, paddingOuter: 0.5 },
+                scale: { paddingInner: 0.1, paddingOuter: 0.01 },
                 axis: {
                     domain: false,
                     ticks: false, 
                     labels: true,
-                    labelFontSize: 12,
+                    labelFontSize: 14,
                     labelPadding: 20,
                     title: null,
                     labelAngle: 0,
@@ -187,45 +155,75 @@
             y: { 
                 field: "Cancer ASR rate",
                 type: "quantitative",
+                scale: { domain: [0, 300], nice: true },
                 axis: { 
                     title: "Age-Standardized Rate (per 100,000 population)",
-                    grid: true,          
-                    tickCount: 6,       
+                    grid: true,        
+                    tickCount: 12,       
                     labelFontSize: 11,
                     labelColor: "black",
                     gridColor: "grey",
                     ticksColor: "grey",
                     gridDash: [4,4],
                 }
+            },
+            color: {
+              field: "Continent",
+              type: "nominal",
+              scale: {
+                domain: ["Africa", "Asia", "Europe", "North America", "Oceania", "South America"],
+                range: [
+                  "#1f77b4",  // dark blue
+                  "#ff7f0e",  // deep orange
+                  "#2ca02c",  // dark green
+                  "#d62728",  // dark red
+                  "#9467bd",  // dark purple
+                  "#8c564b"   // brown
+                ]
+              },
+              legend: { title: "Continent" }
             }
           },
+          
           layer: [
             {
               mark: { type: "line", strokeWidth: 2 },
               encoding: {
-                detail: { field: "Country" },
-                color: { field: "Country", type: "nominal"}
+                detail: { field: "Continent" },
+                color: { field: "Continent", type: "nominal"}
               }
             },
             {
               mark: { type: "point", filled: true, size: 70},
               encoding: {
-                detail: { field: "Country" },
-                color: { field: "Country", type: "nominal" },
+                detail: { field: "Continent" },
+                color: { field: "Continent", type: "nominal" },
                 tooltip: [
-                    { field: "Country", type: "nominal" },
+                    { field: "Continent", type: "nominal" },
                     { field: "Measure", type: "nominal" },
                     { field: "Cancer ASR rate", type: "quantitative" }
                 ]
               }
             },
+            
+                      
             {
+              transform: [
+                    {
+                        calculate: "datum.Measure == 'Mortality' ? (datum.Continent == 'Europe' ? -5: datum.Continent == 'Oceania' ? -5 : datum.Continent == 'North America' ? 10 : datum.Continent == 'South America' ? -5 : datum.Continent == 'Asia' ? -3 : datum.Continent == 'Africa' ? 20 : 0) : (datum.Continent == 'Europe' ? -5 : datum.Continent == 'Oceania' ? -5 : datum.Continent == 'North America' ? -10 : datum.Continent == 'South America' ? -5 : datum.Continent == 'Asia' ? -5 : datum.Continent == 'Africa' ? -5 : 0)",
+                        as: "labelOffsetdx"
+                    },
+                    {
+                        calculate: "datum.Measure == 'Mortality' ? (datum.Continent == 'Europe' ? 5: datum.Continent == 'Oceania' ? 5 : datum.Continent == 'North America' ? 5 : datum.Continent == 'South America' ? 5 : datum.Continent == 'Asia' ? 5 : datum.Continent == 'Africa' ? 5 : 0) : (datum.Continent == 'Europe' ? 5 : datum.Continent == 'Oceania' ? 5 : datum.Continent == 'North America' ? 5 : datum.Continent == 'South America' ? 5 : datum.Continent == 'Asia' ? 5 : datum.Continent == 'Africa' ? 5 : 0)",
+                        as: "labelOffsetdy"
+                    }
+                ],
                 mark: {
                     type: "text",
                     align: "left",
                     baseline: "middle",
-                    dx: 5,
-                    dy: -5,
+                    dx: { expr: "datum.labelOffsetdx" },
+                    dy: { expr: "datum.labelOffsetdy" },
                     fontSize: 15,
                     fontWeight: "bold"
                 },
@@ -233,8 +231,8 @@
                     x: { field: "Measure", type: "nominal" },
                     y: { field: "Cancer ASR rate", type: "quantitative" },
                     text: { field: "Cancer ASR rate", type: "quantitative", format: ".1f" },
-                    color: { field: "Country", type: "nominal" },
-                    detail: { field: "Country" }
+                    color: { field: "Continent", type: "nominal" },
+                    detail: { field: "Continent" },
                 }
             },
             {
@@ -244,9 +242,9 @@
                     strokeWidth: 1,
                 }, 
                 encoding: { 
-                    x: { datum: "Incidence",type: "nominal", band: 0.5},
+                    x: { datum: "Incidence",type: "nominal", band: 0},
                     y: { datum: 0 },
-                    y2: { datum: 400 }
+                    y2: { datum: 300 }
                 } 
             },
             {
@@ -258,11 +256,12 @@
             encoding: { 
                 x: { datum: "Mortality", type: "nominal", band: 0.5 },
                 y: { datum: 0 },
-                y2: { datum: 400 }
+                y2: { datum: 300 }
             } 
         }
     ]
 }
+
       ]
     };
 
