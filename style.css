@@ -34,7 +34,8 @@ h2.title {
 h5.subtitle {
   width: 100%;
   text-align: left;      
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
+  margin-left: 1.4rem;
   color: #3d0477;
   opacity: 0.5;
   font-family: 'Arial', sans-serif;
@@ -51,3 +52,19 @@ h5.subtitle {
 .vega-emded .vega-title {
     text-anchor: start;
 }
+.vega-actions a { margin-right: 5px; }
+    .chart-container { margin-bottom: 40px; }
+    .vega-bindings {
+      position: absolute;
+      top: -20px; /* Adjust to where you want it */
+      left: 1.5rem;
+      z-index: 10;
+      color: #3d0477;
+    }
+
+#combined .vega-embed {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+

@@ -2,7 +2,7 @@ import pycountry_convert as pc
 import pandas as pd
 from geopy.geocoders import Nominatim
 
-cancer_df = pd.read_csv('prevalence_mortality_updt.csv', encoding="cp1252")
+cancer_df = pd.read_csv('Global cancer mortality in males and females (2022).csv', encoding="cp1252")
 country_df = cancer_df['Country']
 geolocator = Nominatim(user_agent="geoapi")
 
@@ -29,5 +29,5 @@ for country in country_df:
 
 cancer_df["Continent"] = continent
 cleaned_cancer_df = cancer_df.dropna(subset=['Continent']).copy()
-cleaned_cancer_df.to_csv("prevalence_mortality_updt.csv", index=False, encoding="utf-8")
+cleaned_cancer_df.to_csv("multi_donutchart_mor_updt.csv", index=False, encoding="utf-8")
 

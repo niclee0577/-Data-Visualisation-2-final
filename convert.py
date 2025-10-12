@@ -63,7 +63,7 @@ cancer_df['Longitude'] = longitudes
 
 cleaned_cancer_df = cancer_df.dropna(subset=['Latitude', 'Longitude', 'NumericCode']).copy()
 cleaned_cancer_df["NumericCode"] = cleaned_cancer_df["NumericCode"].astype(int)
-cleaned_cancer_df.to_csv("prevalence cases_updt.csv", index=False, encoding="utf-8")
+cleaned_cancer_df.to_csv("multi_donutchart_updt.csv", index=False, encoding="utf-8")
 
 
 
