@@ -23,9 +23,8 @@
   <script>
     var vlSpec = {
       $schema: "https://vega.github.io/schema/vega-lite/v6.json",
-      config: { view: { stroke: null }, autosize: { type: "pad", resize: true }},
-      background: "#e5cefcfe",
-          
+      config: { view: { stroke: null }, autosize: {type: "fit", contains: "padding"}},
+      background: "#e5cefcfe",          
       params: [
         {
             name: "SelectedContinents",
@@ -33,7 +32,7 @@
                 input: "select",
                 options: ["Select All", "Asia", "Europe", "Africa", "North America", "Oceania", "South America"],
                 multiple: true,
-                size: 180,
+                size: 200,
                 name: "Please Select Continents: ",
                 
             },
@@ -52,7 +51,6 @@
           },
           width: 700,
           height: 400,
-          center: true,
           projection: { type: "equalEarth"},
 
           layer: [
@@ -109,7 +107,6 @@
           },
           width: 700,
           height: 700,
-          center: true,         
           data: { url: "slope.csv" },
           config: {
             view: {
@@ -342,8 +339,6 @@
               color: "#3d0477",
               offset: 20
           },
-          width: 800,     // 🔒 lock total donut area width
-          height: 800,    // 🔒 lock total donut area height
 
           transform: [
             { filter: "indexof(SelectedContinents, 'Select All') >= 0 || indexof(SelectedContinents, datum.Continent) >= 0" }
@@ -428,11 +423,99 @@
               
             ]
           }
-        }
-        
+        }, 
+  
+        // dot plot
+        {
+          data: { url: "dot_plot_data_check.csv" },
+          title: {
+              text: "Cancer Incidence and Mortality Cases by Cancer Type",
+              fontSize: 20,
+              anchor: "start",
+              color: "#3d0477",
+              offset: 20
+          },
+          width: 700,
+          height: 600,
+          encoding: {
+            x: {
+              field: "Cancer Type",
+              type: "nominal",
+              axis: {
+                title: "Cancer Type",
+                labelFontSize: 11,
+                titleFontSize: 13,
+              },
+              sort: {
+                field: "Number of Cases",
+                op: "max",
+                order: "descending"
+              }
 
-  ]
-};
+            },
+            y: {
+              field: "Number of Cases",
+              type: "quantitative",
+              axis: {
+                title: "Number of Cases",
+                labelFontSize: 11,
+                titleFontSize: 13,
+                format: ",",
+                grid: false 
+              },
+              scale: {
+                type: "log"
+              }
+            }
+          },
+          layer: [
+            {
+              mark: {
+                type: "line",
+                strokeWidth: 2,
+                color: "black"
+              },
+              encoding: {
+                detail: {
+                  field: "Cancer Type"
+                }
+              }
+            },
+            {
+              mark: {
+                type: "point",
+                filled: true,
+                size: 70
+              },
+              encoding: {
+                color: {
+                  field: "Type of Cases",
+                  type: "nominal",
+                  scale: {
+                    domain: ["New incidence cases", "Mortality cases"],
+                    range: [
+                      "#1D0075", 
+                      "#74010F"
+                    ]
+                  },
+                  legend: {
+                    title: "Type of Cases",
+                    titleFontSize: 17,
+                    labelFontSize: 15
+                  }
+                },
+                tooltip: [
+                  {field: "Cancer Type", type: "nominal", title: "Cancer type"},
+                  {field: "Type of Cases", type: "nominal", title: "Type of Cases"},
+                  {field: "Number of Cases", type: "quantitative", title: "Number of Cases", format: ","}
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    };
+        
 
     vegaEmbed("#combined", vlSpec, { actions: false });
   </script>
