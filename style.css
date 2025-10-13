@@ -35,7 +35,7 @@ h5.subtitle {
   width: 100%;
   text-align: left;      
   margin-bottom: 2rem;
-  margin-left: 1.4rem;
+  margin-left: 0.5rem;
   color: #3d0477;
   opacity: 0.5;
   font-family: 'Arial', sans-serif;
@@ -57,7 +57,7 @@ h5.subtitle {
     .vega-bindings {
       position: absolute;
       top: -20px; 
-      left: 1.5rem;
+      left: 0.5rem;
       z-index: 10;
       color: #3d0477;
     }
@@ -66,6 +66,6 @@ h5.subtitle {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  margin-left: 0 !important;
+  align-items: center;
 }
 
