@@ -1,66 +1,65 @@
 Cancer Type,Type of Cases,Number of Cases
-Lung,New incidence cases,2480301
-Female breast,New incidence cases,2308897
-Colorectum,New incidence cases,1926118
-Prostate,New incidence cases,1466680
-Stomach,New incidence cases,968350
-Liver,New incidence cases,865269
-Thyroid,New incidence cases,821173
-Cervix uteri,New incidence cases,661021
-Bladder,New incidence cases,613791
-Non-Hodgkin lymphoma,New incidence cases,553010
-Esophagus,New incidence cases,510716
-Pancreas,New incidence cases,510566
-Leukemia,New incidence cases,486777
-Kidney,New incidence cases,434419
-Corpus uteri,New incidence cases,420242
-Lip,New incidence cases,16
-Melanoma of skin,New incidence cases,331647
-Ovary,New incidence cases,324398
-Brain,New incidence cases,19
-Larynx,New incidence cases,188960
-Multiple myeloma,New incidence cases,187774
-Gallbladder,New incidence cases,122462
-Nasopharynx,New incidence cases,120416
-Oropharynx,New incidence cases,106316
-Hypopharynx,New incidence cases,86276
-Hodgkin lymphoma,New incidence cases,82409
-Testis,New incidence cases,72031
-Salivary glands,New incidence cases,55003
-Vulva,New incidence cases,47342
-Penis,New incidence cases,37699
-Kaposi sarcoma,New incidence cases,35359
-Mesothelioma,New incidence cases,30618
-Vagina,New incidence cases,18800
-Lung,Mortality cases,1817172
-Female breast,Mortality cases,665684
-Colorectum,Mortality cases,903859
-Prostate,Mortality cases,396792
-Stomach,Mortality cases,659853
-Liver,Mortality cases,757948
-Thyroid,Mortality cases,47485
-Cervix uteri,Mortality cases,348189
-Bladder,Mortality cases,220349
-Esophagus,Mortality cases,445129
-Pancreas,Mortality cases,467005
-Leukemia,Mortality cases,305033
-Kidney,Mortality cases,155702
-Corpus uteri,Mortality cases,97704
-Lip,Mortality cases,15
-Melanoma of skin,Mortality cases,58645
-Ovary,Mortality cases,206839
-Brain,Mortality cases,12
-Larynx,Mortality cases,103216
-Multiple myeloma,Mortality cases,121252
-Gallbladder,Mortality cases,89031
-Nasopharynx,Mortality cases,73476
-Oropharynx,Mortality cases,52268
-Hypopharynx,Mortality cases,40917
-Hodgkin lymphoma,Mortality cases,22701
-Testis,Mortality cases,9056
-Salivary glands,Mortality cases,23894
-Vulva,Mortality cases,18579
-Penis,Mortality cases,13729
-Kaposi sarcoma,Mortality cases,15911
-Mesothelioma,Mortality cases,25372
-Vagina,Mortality cases,8238
+Lung,Incidence,2480301
+Female breast,Incidence,2308897
+Colorectum,Incidence,1926118
+Prostate,Incidence,1466680
+Stomach,Incidence,968350
+Liver,Incidence,865269
+Thyroid,Incidence,821173
+Cervix uteri,Incidence,661021
+Bladder,Incidence,613791
+Esophagus,Incidence,510716
+Pancreas,Incidence,510566
+Leukemia,Incidence,486777
+Kidney,Incidence,434419
+Corpus uteri,Incidence,420242
+Lip,Incidence,16
+Melanoma of skin,Incidence,331647
+Ovary,Incidence,324398
+Brain,Incidence,19
+Larynx,Incidence,188960
+Multiple myeloma,Incidence,187774
+Gallbladder,Incidence,122462
+Nasopharynx,Incidence,120416
+Oropharynx,Incidence,106316
+Hypopharynx,Incidence,86276
+Hodgkin lymphoma,Incidence,82409
+Testis,Incidence,72031
+Salivary glands,Incidence,55003
+Vulva,Incidence,47342
+Penis,Incidence,37699
+Kaposi sarcoma,Incidence,35359
+Mesothelioma,Incidence,30618
+Vagina,Incidence,18800
+Lung,Mortality,1817172
+Female breast,Mortality,665684
+Colorectum,Mortality,903859
+Prostate,Mortality,396792
+Stomach,Mortality,659853
+Liver,Mortality,757948
+Thyroid,Mortality,47485
+Cervix uteri,Mortality,348189
+Bladder,Mortality,220349
+Esophagus,Mortality,445129
+Pancreas,Mortality,467005
+Leukemia,Mortality,305033
+Kidney,Mortality,155702
+Corpus uteri,Mortality,97704
+Lip,Mortality,15
+Melanoma of skin,Mortality,58645
+Ovary,Mortality,206839
+Brain,Mortality,12
+Larynx,Mortality,103216
+Multiple myeloma,Mortality,121252
+Gallbladder,Mortality,89031
+Nasopharynx,Mortality,73476
+Oropharynx,Mortality,52268
+Hypopharynx,Mortality,40917
+Hodgkin lymphoma,Mortality,22701
+Testis,Mortality,9056
+Salivary glands,Mortality,23894
+Vulva,Mortality,18579
+Penis,Mortality,13729
+Kaposi sarcoma,Mortality,15911
+Mesothelioma,Mortality,25372
+Vagina,Mortality,8238

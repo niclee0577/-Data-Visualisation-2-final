@@ -12,12 +12,11 @@
 </head>
 <body>
 <div class="header">
-  <h1 class="title">Global Cancer Information (2022)</h1>
+  <h1 class="title">Global Cancer Mortality and Incidence Information (2022)</h1>
 </div>
 
 <div class="content">
     <h5 class="subtitle">* ASR = Age-Standardized Rate per 100,000 population</h5>
-    
     <div id="combined" class="content_map"></div>
     <div id="dotchart" class="content_map"></div>
 
@@ -29,24 +28,11 @@
       config: {
         view: {
           stroke: null,
-          // enforce identical internal padding for every child plot area
-          padding: { left: 0, right: 0, top: 0, bottom: 0 }
+          facet: { spacing: 0 },
+          padding: 0 
         },
-        axis: {
-          labelFontSize: 12,
-          titleFontSize: 14,
-          labelPadding: 10
-        },
-        legend: {
-          titleFontSize: 14,
-          labelFontSize: 12
-        }
       },
       autosize: { type: "fit", contains: "padding"},
-
-      
-      
-      
       
       background: "#e5cefcfe", 
       params: [
@@ -72,10 +58,23 @@
             fontSize: 20,
             anchor: "start",
             color: "#3d0477",
+            offset: 30,
+            subtitle: [
+              " ",  
+              "This map shows global cancer prevalence cases ASR (2022). Darker red regions, such as North America, Europe, and Australia, have the highest prevalence rates ", 
+              "(over 400 per 100,000), reflecting aging populations and better detection. Africa and parts of Asia show lower prevalence, likely due to underdiagnosis and ",
+              "limited healthcare access. Overall, developed regions report more cancer cases, while developing regions face underreporting and data limitations despite ",
+              "growing cancer burdens."
+            ],
+            subtitleFontSize: 14,
+            subtitleColor: "#3d0477"
           },
-          width: 800,
-          height: 400,
-          projection: { type: "equalEarth"},
+          width: 900,
+          height: 500,
+          dy: 10,
+          projection: { 
+            type: "equalEarth", 
+          },
 
           layer: [
             {
@@ -109,7 +108,7 @@
                   type: "quantitative",
                   align: "left",
                   scale: { scheme: "reds" },
-                  legend: { title: ["Prevalence Cases", "(ASR)"], titleFontSize: 17, labelFontSize: 15}
+                  legend: { title: ["Prevalence Cases", "(ASR)"], titleFontSize: 13, labelFontSize: 11}
                 },
                 tooltip: [
                   { field: "Country", type: "nominal" },
@@ -120,17 +119,58 @@
           ]
         },
 
+        {
+          hconcat: [
+          // text  
+          {
+            title: {
+              text: [
+                "Global Cancer Incidence and Mortaility",
+                "Rate By Continent (2022)"
+              ],
+              fontSize: 20,
+              anchor: "start",
+              color: "#3d0477",
+              offset: 20,
+              dy: 350,
+              dx: 0
+            },
+            width: 500,
+            height: 100,
+            data: { values: [{}] }, 
+            mark: {
+              type: "text",
+              align: "left",
+              baseline: "middle",
+              fontSize: 14,
+              color: "#3d0477",
+              lineBreak: "auto",  
+              lineHeight: 18,
+              limit: 500         
+            },
+            encoding: {
+              x: { value: 0 }, 
+              y: { value: 350 },
+              text: {
+                value:
+                  [
+                    "The graph compares cancer Incidence ASR and Mortality ASR ",
+                    "across continents. North America and Europe show high incidence ", 
+                    "but much lower mortality, indicating strong healthcare and early ",
+                    "detection. Africa and Asia have lower incidence yet higher mortality ",
+                    "ratios, reflecting limited diagnosis and treatment access. The wide ",
+                    "gaps in developed regions highlight effective healthcare systems, ",
+                    "while narrow gaps in developing regions suggest underdiagnosis and ",
+                    "poorer cancer management outcomes.."
+                ]
+              }
+            }
+    
+
+          },
         // Slope Graph
         {
-          title: {
-            text: "Global Cancer Incidence and Mortality Rate for each Continent (2022)",
-            fontSize: 20,
-            anchor: "start",
-            dx: 0,
-            color: "#3d0477",
-            offset: 0
-          },
-          width: 800,
+          width: 400,
           height: 700,
           data: { url: "slope.csv" },
           config: {
@@ -156,7 +196,10 @@
                     labelAngle: 0,
                     labelAlign: "center",
                     labelBaseline: "top",
-                    labelFontSize: 20,
+                    labelFontSize: 15,
+                    orient: "top",
+                    dy: 10,
+                    labelExpr: "datum.label == 'Incidence' ? 'Incidence ASR' : datum.label == 'Mortality' ? 'Mortality ASR' : datum.label" 
                 }
             },
             y: { 
@@ -177,9 +220,10 @@
                   "#d62728",  // dark red
                   "#6D2494",  // dark purple
                   "#8c564b"   // brown
-                ]
+                ],
+
               },
-              legend: { title: "Continent", titleFontSize: 17, labelFontSize: 15}
+              legend: { title: "Continent", titleFontSize: 13, labelFontSize: 11, orient: "right"}
             }
           },
 
@@ -232,15 +276,15 @@
                 }
             },
             {
-                mark: { 
-                    type: "rule", 
-                    stroke: "black", 
-                    strokeWidth: 1,
-                }, 
-                encoding: { 
-                    x: { datum: "Incidence",type: "nominal", band: 0},
-                    y: { datum: 80 },
-                    y2: { datum: 300 }
+              mark: { 
+                  type: "rule", 
+                  stroke: "black", 
+                  strokeWidth: 1,
+              }, 
+              encoding: { 
+                  x: { datum: "Incidence",type: "nominal", band: 0.5,},
+                  y: { datum: 80 },
+                  y2: { datum: 290 }
                 } 
             },
             {
@@ -250,48 +294,46 @@
                     strokeWidth: 1 
                 }, 
             encoding: { 
-                x: { datum: "Mortality", type: "nominal", band: 0.5 },
+                x: { datum: "Mortality", type: "nominal", band: 0.5,  },
                 y: { datum: 80 },
-                y2: { datum: 300 }
+                y2: { datum: 290 }
             } 
         }
         ]
         },
         
+    ]
+      },
+        // multi donut chart
         {
           hconcat: [
-        // multi donut chart (incidence)
+        {
+          vconcat: [
+        
+        // incidence
         {
           data: { url: "multi_donutchart_in_check_updt.csv" },
-          title: {
-              text: ["Global Cancer Incidence Cases based","on Gender and Continent (2022)"],
-              fontSize: 20,
-              anchor: "start",
-              color: "#3d0477",
-              offset: 20
-          },
           transform: [
             { filter: "indexof(SelectedContinents, 'Select All') >= 0 || indexof(SelectedContinents, datum.Continent) >= 0" }
           ],
           columns: 3,
           spacing: 0,
+          dx: 100,
           
           facet: {
               field: "Continent",
               type: "nominal",
               header: {
-                labelFontSize: 16,
-                titleFontSize: 18
+                title: "Continent (Incidence)",
+                titleFontSize: 14, 
+                labelFontSize: 13,
+                labelAlign: "center"   
               }
           },
-          resolve: {
-            scale: {
-              color: "shared"
-            }
-          },
           spec: {
-            width: 120,
+            width: 140,
             height: 130,
+            config: { view: { stroke: "red", padding: 0 } },
             layer: [
               {
                 mark: { type: "arc", innerRadius: 20 ,outerRadius: 35},
@@ -309,7 +351,7 @@
                         "#120174"       // dark blue
                       ] 
                     },
-                    legend: { title: "Gender", titleFontSize: 17, labelFontSize: 15 }
+                    legend: { title: "Gender", titleFontSize: 13, labelFontSize: 11, orient: "top"}
                   },
                   tooltip: [
                     {field: "Continent",type: "nominal"},
@@ -329,7 +371,8 @@
                   theta: {
                     field: "Gender Percentage",
                     type: "quantitative",
-                    stack: true
+                    stack: true,
+    
                   },
                   text: {
                     field: "Gender Percentage",
@@ -354,17 +397,9 @@
           }
         },
         
-        // multi donut chart (mortality)
+        // mortality
         {
           data: { url: "multi_donutchart_mor_check_updt.csv" },
-          title: {
-              text: ["Global Cancer Mortality Cases based","on Gender and Continent (2022)"],
-              fontSize: 20,
-              anchor: "start",
-              color: "#3d0477",
-              offset: 20
-          },
-
           transform: [
             { filter: "indexof(SelectedContinents, 'Select All') >= 0 || indexof(SelectedContinents, datum.Continent) >= 0" }
           ],
@@ -375,17 +410,13 @@
               field: "Continent",
               type: "nominal",
               header: {
-                labelFontSize: 16,
-                titleFontSize: 18
+                title: "Continent (Mortality)",
+                titleFontSize: 14, 
+                labelFontSize: 13,
               }
           },
-          resolve: {
-            scale: {
-              color: "shared"
-            }
-          },
           spec: {
-            width: 120,
+            width: 140,
             height: 130,
             layer: [
               {
@@ -450,67 +481,151 @@
         }, 
       
       ]
+    
+    },
+    // text
+    {
+      title: {
+        text: [
+          "Global Cancer Incidence and Mortaility",
+          "Cases By Gender and Continent (2022)"
+        ],
+        fontSize: 20,
+        anchor: "start",
+        color: "#3d0477",
+        offset: 20,
+        dy: 200,
+        dx: 100
+      },
+      width: 500,
+      height: 100,
+      data: { values: [{}] }, 
+      mark: {
+        type: "text",
+        align: "left",
+        baseline: "middle",
+        fontSize: 14,
+        color: "#3d0477",
+        lineBreak: "auto",  
+        lineHeight: 18,
+        limit: 400         
+      },
+      encoding: {
+        x: { value: 100 }, 
+        y: { value: 200 },
+        text: {
+          value:
+            ["This visualization compares cancer incidence and mortality ",
+            "by gender across continents in 2022. Overall, females show ",
+            "slightly higher proportions of cancer cases in most regions, ",
+            "particularly in Africa and North America. Mortality patterns ",
+            "follow a similar trend, indicating consistent gender-based ",
+            "outcomes. Oceania and South America exhibit nearly equal ",
+            "distributions between males and females. The close alignment ",
+            "between incidence and mortality suggests similar treatment ",
+            "access and survival outcomes across genders globally."
+          ]
+        }
       }
-      ]
+    }
+  ],
+  autosize: { type: "fit", contains: "content" }
+  }
+      
+]
     };
 
 
     var v2Spec = {
       $schema: "https://vega.github.io/schema/vega-lite/v6.json",
       background: "#e5cefcfe",
-      title: {
-          text: "Cancer Incidence and Mortality Cases by Cancer Type",
+      hconcat: [
+        // text
+      {
+        title: {
+          text: ["Cancer Incidence and Mortality Cases", "by Cancer Type (2022)"],
           fontSize: 20,
           anchor: "start",
           color: "#3d0477",
-          offset: 20
-      },
-      data: { url: "dot_plot_data_check.csv" },
-      width: 700,
-      height: 600,
-      encoding: {
-        y: {
-          field: "Cancer Type",
-          type: "nominal",
-          axis: { title: "Cancer Type", labelFontSize: 11, titleFontSize: 13 },
-          sort: { field: "Number of Cases", op: "max", order: "descending" }
+          offset: 20,
+          dy: 300
         },
-        x: {
-          field: "Number of Cases",
-          type: "quantitative",
-          axis: { title: "Number of Cases", labelFontSize: 11, titleFontSize: 13, format: ",", grid: false },
-          scale: { type: "log" }
-        }
-      },
-      layer: [
-        {
-          mark: { type: "line", strokeWidth: 2, color: "black" },
-          encoding: { detail: { field: "Cancer Type" } }
+        width: 500,
+        height: 600,
+        data: { values: [{}] }, 
+        mark: {
+          type: "text",
+          align: "left",
+          baseline: "middle",
+          fontSize: 14,
+          color: "#3d0477",
+          lineBreak: "auto",  
+          lineHeight: 18,
+          limit: 500         
         },
-        {
-          mark: { type: "point", filled: true, size: 70 },
-          encoding: {
-            color: {
-              field: "Type of Cases",
-              type: "nominal",
-              scale: {
-                domain: ["New incidence cases", "Mortality cases"],
-                range: ["#1D0075", "#74010F"]
-              },
-              legend: { title: "Type of Cases", titleFontSize: 17, labelFontSize: 15 }
-            },
-            tooltip: [
-              { field: "Cancer Type", type: "nominal", title: "Cancer type" },
-              { field: "Type of Cases", type: "nominal", title: "Type of Cases" },
-              { field: "Number of Cases", type: "quantitative", title: "Number of Cases", format: "," }
+        encoding: {
+          x: { value: 0 }, 
+          y: { value: 300 },
+          text: {
+            value:
+              ["This visualization compares global cancer incidence and ",
+              "mortality in 2022. Lung, breast, and colorectal cancers  ",
+              "have the highest overall burden, while thyroid and prostate",
+              "show better survival outcomes. The shorter gaps between ",
+              "incidence and mortality in liver and pancreatic cancers ",
+              "indicate poorer prognoses globally."
             ]
           }
         }
-      ]
-    };
+      },
 
-        
+        {
+          data: { url: "dot_plot_data_check.csv" },
+          width: 240,
+          height: 600,
+          encoding: {
+            y: {
+              field: "Cancer Type",
+              type: "nominal",
+              axis: { title: "Cancer Type", labelFontSize: 11, titleFontSize: 13 },
+              sort: { field: "Number of Cases", op: "max", order: "descending" }
+            },
+            x: {
+              field: "Number of Cases",
+              type: "quantitative",
+              axis: { title: "Number of Cases", labelFontSize: 11, titleFontSize: 13, format: ",", grid: false },
+              scale: { type: "log" },
+            }
+          },
 
+          layer: [
+            {
+              mark: { type: "line", strokeWidth: 2, color: "black" },
+              encoding: { detail: { field: "Cancer Type" } }
+            },
+            {
+              mark: { type: "point", filled: true, size: 70 },
+              encoding: {
+                color: {
+                  field: "Type of Cases",
+                  type: "nominal",
+                  scale: {
+                    domain: ["Incidence", "Mortality"],
+                    range: ["#1D0075", "#74010F"]
+                  },
+                  legend: { title: "Type of Cases", titleFontSize: 13, labelFontSize: 11, labels: ["Incidence, Mortality"]}
+                },
+                tooltip: [
+                  { field: "Cancer Type", type: "nominal", title: "Cancer type" },
+                  { field: "Type of Cases", type: "nominal", title: "Type of Cases" },
+                  { field: "Number of Cases", type: "quantitative", title: "Number of Cases", format: "," }
+                ]
+              }
+            },
+          ]
+        }
+        ]
+    }
     vegaEmbed("#combined", vlSpec, { actions: false });
     vegaEmbed("#dotchart", v2Spec, { actions: false });
   </script>
