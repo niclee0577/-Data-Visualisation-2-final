@@ -33,7 +33,7 @@
         },
       },
       autosize: { type: "fit", contains: "padding"},
-      background: "#e5cefcfe", 
+      background: "#ecd9fffe", 
       params: [
         {
             name: "SelectedContinents",
@@ -52,6 +52,16 @@
     vconcat: [
         // Choropleth Map
         {
+          title: {
+              text: [
+                "Global Cancer Incidence and Mortaility Rate By Continent (2022)"
+              ],
+              fontSize: 20,
+              anchor: "start",
+              color: "#3d0477",
+              offset: 20,
+            },
+
           width: 900,
           height: 500,
           projection: { 
@@ -124,7 +134,104 @@
           }
           ]
         },
-
+        {
+        hconcat: [
+          {
+            title: {
+              text: [
+                "Global Cancer Incidence and Mortaility Cases By ",
+                "Gender and Continent (2022)"
+              ],
+              fontSize: 20,
+              anchor: "start",
+              color: "#3d0477",
+              offset: 20,
+              dy: 100,
+              dx: 0
+          },
+          width: 500,
+          height: 300,
+          data: { values: [{}] }, 
+          mark: {
+            type: "text",
+            align: "left",
+            baseline: "middle",
+            fontSize: 18,
+            color: "#3d0477",
+            lineHeight: 18,
+            limit: 500       
+          },
+          encoding: {
+            x: { value: 0 }, 
+            y: { value: 100 },
+            text: {
+              value:
+                ["This visualization compares cancer incidence and mortality ",
+                "by gender across continents in 2022. Overall, females show ",
+                "slightly higher proportions of cancer cases in most regions, ",
+                "particularly in Africa and North America. Mortality patterns ",
+                "follow a similar trend, indicating consistent gender-based ",
+                "outcomes. Oceania and South America exhibit nearly equal ",
+                "distributions between males and females. The close alignment ",
+                "between incidence and mortality suggests similar treatment ",
+                "access and survival outcomes across genders globally.",
+                " ",
+                " ",
+              ]
+            }
+          }
+        },
+        {
+          // text  
+          title: {
+            text: [
+              "Global Cancer Incidence and Mortaility Rate By ",
+              "Continent (2022)"
+            ],
+            fontSize: 20,
+            anchor: "start",
+            color: "#3d0477",
+            offset: 20,
+            dy: 100,
+            dx: 100
+          },
+          width: 500,
+          height: 100,
+          data: { values: [{}] }, 
+          mark: {
+            type: "text",
+            align: "left",
+            baseline: "middle",
+            fontSize: 18,
+            color: "#3d0477",
+            lineBreak: "auto",  
+            lineHeight: 18,
+            limit: 500         
+          },
+          encoding: {
+            x: { value: 100 }, 
+            y: { value: 100 },
+            text: {
+              value:
+                [
+                  "The graph compares cancer Incidence ASR and Mortality ASR ",
+                  "across continents. North America and Europe show high ", 
+                  "incidence but much lower mortality, indicating strong ",
+                  "healthcare and early detection. Africa and Asia have ",
+                  "lower incidence yet higher mortality ratios, reflecting ",
+                  "limited diagnosis and treatment access. The wide gaps in ",
+                  "developed regions highlight effective healthcare systems, ",
+                  "while narrow gaps in developing regions suggest ",
+                  "underdiagnosis and poorer cancer management outcomes.",
+                  " ",
+                  " ",
+              ]
+            }
+          },
+        }
+        ]
+      },
+        
         {
           hconcat: [
           // multi donut chart
@@ -132,18 +239,29 @@
           vconcat: [  
         // incidence
         {
-          data: { url: "multi_donutchart_in_check_updt.csv" },  
-          dx: 100,
+          data: { url: "multi_donutchart_in_check_updt.csv" },
+          title: {
+              text: [
+                "Global Cancer Incidence and Mortaility Cases By ",
+                "Gender and Continent (2022)"
+              ],
+              fontSize: 20,
+              anchor: "start",
+              color: "#3d0477",
+              offset: 20,
+
+            },
           columns: 3,
           facet: {
               field: "Continent",
               type: "nominal",
               bounds: "flush",
               columns: 3,
+              dy:100,
               header: {
                 title: "Continent (Incidence)",
-                titleFontSize: 14, 
-                labelFontSize: 13,
+                titleFontSize: 16, 
+                labelFontSize: 15,
                 labelAlign: "center",
                 labelExpr: "indexof(SelectedContinents, 'Select All') >= 0 ? datum.label : (indexof(SelectedContinents, datum.value) >= 0 ? datum.label : '')"
               }
@@ -246,8 +364,8 @@
               bounds: "flush",
               header: {
                 title: "Continent (Mortality)",
-                titleFontSize: 14, 
-                labelFontSize: 13,
+                titleFontSize: 16, 
+                labelFontSize: 15,
                 labelExpr: "indexof(SelectedContinents, 'Select All') >= 0 ? datum.label : (indexof(SelectedContinents, datum.value) >= 0 ? datum.label : '')"
               }
           },
@@ -339,6 +457,18 @@
         {
           width: 500,
           height: 600,
+          title: {
+              text: [
+                "Global Cancer Incidence and Mortaility Cases By ",
+                "Gender and Continent (2022)"
+              ],
+              fontSize: 20,
+              anchor: "start",
+              color: "#3d0477",
+              offset: 20,
+              dy: 0,
+              dx: 0
+          },
           data: { url: "slope.csv" },
           config: {
             view: {
@@ -365,7 +495,6 @@
                     labelBaseline: "top",
                     labelFontSize: 15,
                     orient: "top",
-                    dy: 10,
                     labelExpr: "datum.label == 'Incidence' ? 'Incidence ASR' : datum.label == 'Mortality' ? 'Mortality ASR' : datum.label" 
                 }
             },
@@ -417,11 +546,11 @@
           {
               transform: [
                   {
-                        calculate: "datum.Measure == 'Mortality' ? 5: -45",
+                        calculate: "datum.Measure == 'Mortality' ? 10: -50",
                         as: "labelOffsetdx"
                     },
                     {
-                        calculate: "datum.Measure == 'Mortality' ? (datum.Continent == 'Europe' ? -5: datum.Continent == 'Oceania' ? -5 : datum.Continent == 'North America' ? 10 : datum.Continent == 'South America' ? -5 : datum.Continent == 'Asia' ? -3 : datum.Continent == 'Africa' ? 20 : 0) : (datum.Continent == 'Europe' ? -5 : datum.Continent == 'Oceania' ? -5 : datum.Continent == 'North America' ? -10 : datum.Continent == 'South America' ? -5 : datum.Continent == 'Asia' ? -5 : datum.Continent == 'Africa' ? -5 : 0)",
+                        calculate: "datum.Measure == 'Mortality' ? (datum.Continent == 'Europe' ? -7: datum.Continent == 'Oceania' ? -6 : datum.Continent == 'North America' ? 10 : datum.Continent == 'South America' ? -5 : datum.Continent == 'Asia' ? -3 : datum.Continent == 'Africa' ? 20 : 0) : (datum.Continent == 'Europe' ? -5 : datum.Continent == 'Oceania' ? -5 : datum.Continent == 'North America' ? -10 : datum.Continent == 'South America' ? -5 : datum.Continent == 'Asia' ? -5 : datum.Continent == 'Africa' ? -5 : 0)",
                         as: "labelOffsetdy"
                     }
                 ],
@@ -431,7 +560,7 @@
                     baseline: "middle",
                     dx: { expr: "datum.labelOffsetdx" },
                     dy: { expr: "datum.labelOffsetdy" },
-                    fontSize: 15,
+                    fontSize: 17,
                     fontWeight: "bold"
                 },
                 encoding: {
@@ -475,19 +604,125 @@
       legend: { color: "independent" }
     }
       },
-      
+      {
+        hconcat: [
+          {
+            title: {
+            text: [
+              "Global Cancer Incidence and Mortaility Cases By ",
+              "Gender and Continent (2022)"
+            ],
+            fontSize: 20,
+            anchor: "start",
+            color: "#3d0477",
+            offset: 20,
+            dy: 50,
+            dx: 0
+          },
+          width: 500,
+          height: 300,
+          data: { values: [{}] }, 
+          mark: {
+            type: "text",
+            align: "left",
+            baseline: "middle",
+            fontSize: 18,
+            color: "#3d0477",
+            lineHeight: 18,
+            limit: 500       
+          },
+          encoding: {
+            x: { value: 0 }, 
+            y: { value: 50 },
+            text: {
+              value:
+                ["This visualization compares cancer incidence and mortality ",
+                "by gender across continents in 2022. Overall, females show ",
+                "slightly higher proportions of cancer cases in most regions, ",
+                "particularly in Africa and North America. Mortality patterns ",
+                "follow a similar trend, indicating consistent gender-based ",
+                "outcomes. Oceania and South America exhibit nearly equal ",
+                "distributions between males and females. The close alignment ",
+                "between incidence and mortality suggests similar treatment ",
+                "access and survival outcomes across genders globally.",
+                " ",
+                " ",
+                " "
+              ]
+            }
+          }
+        },
+        {
+          // text  
+          title: {
+            text: [
+              "Global Cancer Incidence and Mortaility Rate By ",
+              "Continent (2022)"
+            ],
+            fontSize: 20,
+            anchor: "start",
+            color: "#3d0477",
+            offset: 20,
+            dy: 50,
+            dx: 100
+          },
+          width: 500,
+          height: 100,
+          data: { values: [{}] }, 
+          mark: {
+            type: "text",
+            align: "left",
+            baseline: "middle",
+            fontSize: 18,
+            color: "#3d0477",
+            lineBreak: "auto",  
+            lineHeight: 18,
+            limit: 500         
+          },
+          encoding: {
+            x: { value: 100 }, 
+            y: { value: 50 },
+            text: {
+              value:
+                [
+                  "The graph compares cancer Incidence ASR and Mortality ASR ",
+                  "across continents. North America and Europe show high ", 
+                  "incidence but much lower mortality, indicating strong ",
+                  "healthcare and early detection. Africa and Asia have ",
+                  "lower incidence yet higher mortality ratios, reflecting ",
+                  "limited diagnosis and treatment access. The wide gaps in ",
+                  "developed regions highlight effective healthcare systems, ",
+                  "while narrow gaps in developing regions suggest ",
+                  "underdiagnosis and poorer cancer management outcomes.",
+                  " ",
+                  " ",
+                  " "
+              ]
+            }
+          },
+        }
+        ]
+      }
 ]
     };
 
 
     var v2Spec = {
       $schema: "https://vega.github.io/schema/vega-lite/v6.json",
-      background: "#e5cefcfe",
+      background: "#ecd9fffe",
       vconcat: [
         {
           data: { url: "dot_plot_data_check.csv" },
-          width: 895,
+          width: 700,
           height: 600,
+          title: {
+              text: [
+                "Global Cancer Incidence and Mortaility Cases By Gender and Continent (2022)"
+              ],
+              fontSize: 20,
+              anchor: "start",
+              color: "#3d0477",
+            },
           encoding: {
             y: {
               field: "Cancer Type",
@@ -521,7 +756,7 @@
                       "#AD1D00"
                     ]
                   },
-                  legend: { title: "Type of Cases", titleFontSize: 16, labelFontSize: 15, labels: ["Incidence, Mortality"]}
+                  legend: { title: "Type of Cases", titleFontSize: 16, labelFontSize: 15, labels: ["Incidence, Mortality"], offset: -30}
                 },
                 tooltip: [
                   { field: "Cancer Type", type: "nominal", title: "Cancer type" },
@@ -531,7 +766,106 @@
               }
             },
           ]
+        },
+        {
+        hconcat: [
+          {
+            title: {
+            text: [
+              "Global Cancer Incidence and Mortaility Cases By ",
+              "Gender and Continent (2022)"
+            ],
+            fontSize: 20,
+            anchor: "start",
+            color: "#3d0477",
+            offset: 20,
+            dy: 100,
+            dx: 0
+          },
+          width: 450,
+          height: 300,
+          data: { values: [{}] }, 
+          mark: {
+            type: "text",
+            align: "left",
+            baseline: "middle",
+            fontSize: 18,
+            color: "#3d0477",
+            lineHeight: 18,
+            limit: 500       
+          },
+          encoding: {
+            x: { value: -150 }, 
+            y: { value: 100 },
+            text: {
+              value:
+                ["This visualization compares cancer incidence and mortality ",
+                "by gender across continents in 2022. Overall, females show ",
+                "slightly higher proportions of cancer cases in most regions, ",
+                "particularly in Africa and North America. Mortality patterns ",
+                "follow a similar trend, indicating consistent gender-based ",
+                "outcomes. Oceania and South America exhibit nearly equal ",
+                "distributions between males and females. The close alignment ",
+                "between incidence and mortality suggests similar treatment ",
+                "access and survival outcomes across genders globally.",
+                " ",
+                " ",
+                " "
+              ]
+            }
+          }
+        },
+        {
+          // text  
+          title: {
+            text: [
+              "Global Cancer Incidence and Mortaility Rate By ",
+              "Continent (2022)"
+            ],
+            fontSize: 20,
+            anchor: "start",
+            color: "#3d0477",
+            offset: 20,
+            dy: 100,
+            dx: 0
+          },
+          width: 200,
+          height: 100,
+          data: { values: [{}] }, 
+          mark: {
+            type: "text",
+            align: "left",
+            baseline: "middle",
+            fontSize: 18,
+            color: "#3d0477",
+            lineBreak: "auto",  
+            lineHeight: 18,
+            limit: 500         
+          },
+          encoding: {
+            x: { value: 0 }, 
+            y: { value: 100 },
+            text: {
+              value:
+                [
+                  "The graph compares cancer Incidence ASR and Mortality ASR ",
+                  "across continents. North America and Europe show high ", 
+                  "incidence but much lower mortality, indicating strong ",
+                  "healthcare and early detection. Africa and Asia have ",
+                  "lower incidence yet higher mortality ratios, reflecting ",
+                  "limited diagnosis and treatment access. The wide gaps in ",
+                  "developed regions highlight effective healthcare systems, ",
+                  "while narrow gaps in developing regions suggest ",
+                  "underdiagnosis and poorer cancer management outcomes.",
+                  " ",
+                  " ",
+                  " "
+              ]
+            }
+          },
         }
+        ]
+      }
         ]
     }
     vegaEmbed("#combined", vlSpec, { actions: false });
