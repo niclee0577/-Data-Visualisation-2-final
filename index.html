@@ -33,7 +33,6 @@
         },
       },
       autosize: { type: "fit", contains: "padding"},
-      
       background: "#e5cefcfe", 
       params: [
         {
@@ -53,124 +52,293 @@
     vconcat: [
         // Choropleth Map
         {
-          title: {
-            text: "Global Cancer Prevalence Cases (2022)",
-            fontSize: 20,
-            anchor: "start",
-            color: "#3d0477",
-            offset: 30,
-            subtitle: [
-              " ",  
-              "This map shows global cancer prevalence cases ASR (2022). Darker red regions, such as North America, Europe, and Australia, have the highest prevalence rates ", 
-              "(over 400 per 100,000), reflecting aging populations and better detection. Africa and parts of Asia show lower prevalence, likely due to underdiagnosis and ",
-              "limited healthcare access. Overall, developed regions report more cancer cases, while developing regions face underreporting and data limitations despite ",
-              "growing cancer burdens."
-            ],
-            subtitleFontSize: 14,
-            subtitleColor: "#3d0477"
-          },
           width: 900,
           height: 500,
           projection: { 
-            type: "equalEarth", 
+            type: "equalEarth",
+          },
+          layer: [
+          
+          // Ocean Backgrond
+          {
+            data:{
+              values: [{type: "Sphere"}]
+            },
+            mark: {type: "geoshape", fill:"#cce6ff" }
           },
 
-          layer: [
-            {
-              data: {
-                url: "https://vega.github.io/vega-datasets/data/world-110m.json",
-                format: { type: "topojson", feature: "countries" }
-              },
-              mark: { type: "geoshape", fill: "darkgray", stroke: "black", strokeWidth: 0.5 }
+          //graticule grid
+          {
+            data: {
+              graticule: {}
             },
-            {
-              data: {
-                url: "https://vega.github.io/vega-datasets/data/world-110m.json",
-                format: { type: "topojson", feature: "countries" }
-              },
-              transform: [
-                {
-                  lookup: "id",
-                  from: {
-                    data: { url: "prevalence_mortality_updt.csv" },
-                    key: "NumericCode",
-                    fields: ["Country","PrevalenceCases", "Continent"]
-                  }
-                },
-                { filter: "indexof(SelectedContinents, 'Select All') >= 0 || indexof(SelectedContinents, datum.Continent) >= 0" }
+            mark: {
+              type: "geoshape",
+              stroke: "#d1d1d1",
+              strokeWidth: 0.5
+            },
+            projection: {type: "equalEarth"}
+          },
 
-              ],
-              mark: { type: "geoshape", stroke: "black", strokeWidth: 1.5 },
-              encoding: {
-                color: {
-                  field: "PrevalenceCases",
-                  type: "quantitative",
-                  align: "left",
-                  scale: { scheme: "reds" },
-                  legend: { title: ["Prevalence Cases", "(ASR)"], titleFontSize: 13, labelFontSize: 11}
-                },
-                tooltip: [
-                  { field: "Country", type: "nominal" },
-                  { field: "PrevalenceCases", type: "quantitative" }
-                ]
-              }
+          // map outline  
+          {
+            data: {
+              url: "https://vega.github.io/vega-datasets/data/world-110m.json",
+              format: { type: "topojson", feature: "countries" }
+            },
+            mark: { type: "geoshape", fill: "darkgray", stroke: "black", strokeWidth: 0.5 }
+          },
+          
+          // map with data
+          {
+            data: {
+              url: "https://vega.github.io/vega-datasets/data/world-110m.json",
+              format: { type: "topojson", feature: "countries" }
+            },
+            transform: [
+              {
+                lookup: "id",
+                from: {
+                  data: { url: "prevalence_mortality_updt.csv" },
+                  key: "NumericCode",
+                  fields: ["Country","PrevalenceCases", "Continent"]
+                }
+              },
+              { filter: "indexof(SelectedContinents, 'Select All') >= 0 || indexof(SelectedContinents, datum.Continent) >= 0" }
+
+            ],
+            mark: { type: "geoshape", stroke: "black", strokeWidth: 1.5 },
+            encoding: {
+              color: {
+                field: "PrevalenceCases",
+                type: "quantitative",
+                align: "left",
+                scale: { scheme: "reds" },
+                legend: { title: ["Prevalence Cases", "(ASR)"], titleFontSize: 16, labelFontSize: 15, offset: -140}    
+              },
+              tooltip: [
+                { field: "Country", type: "nominal" },
+                { field: "PrevalenceCases", type: "quantitative" }
+              ]
             }
+          }
           ]
         },
 
         {
           hconcat: [
-          // text  
-          {
-            title: {
-              text: [
-                "Global Cancer Incidence and Mortaility",
-                "Rate By Continent (2022)"
-              ],
-              fontSize: 20,
-              anchor: "start",
-              color: "#3d0477",
-              offset: 20,
-              dy: 350,
-              dx: 0
-            },
-            width: 500,
-            height: 100,
-            data: { values: [{}] }, 
-            mark: {
-              type: "text",
-              align: "left",
-              baseline: "middle",
-              fontSize: 14,
-              color: "#3d0477",
-              lineBreak: "auto",  
-              lineHeight: 18,
-              limit: 500         
-            },
-            encoding: {
-              x: { value: 0 }, 
-              y: { value: 350 },
-              text: {
-                value:
-                  [
-                    "The graph compares cancer Incidence ASR and Mortality ASR ",
-                    "across continents. North America and Europe show high incidence ", 
-                    "but much lower mortality, indicating strong healthcare and early ",
-                    "detection. Africa and Asia have lower incidence yet higher mortality ",
-                    "ratios, reflecting limited diagnosis and treatment access. The wide ",
-                    "gaps in developed regions highlight effective healthcare systems, ",
-                    "while narrow gaps in developing regions suggest underdiagnosis and ",
-                    "poorer cancer management outcomes."
-                ]
+          // multi donut chart
+        {
+          vconcat: [  
+        // incidence
+        {
+          data: { url: "multi_donutchart_in_check_updt.csv" },  
+          dx: 100,
+          columns: 3,
+          facet: {
+              field: "Continent",
+              type: "nominal",
+              bounds: "flush",
+              columns: 3,
+              header: {
+                title: "Continent (Incidence)",
+                titleFontSize: 14, 
+                labelFontSize: 13,
+                labelAlign: "center",
+                labelExpr: "indexof(SelectedContinents, 'Select All') >= 0 ? datum.label : (indexof(SelectedContinents, datum.value) >= 0 ? datum.label : '')"
               }
-            }
-    
-
           },
+          view: { continuousWidth: 600, continuousHeight: 300 }, 
+          resolve: { scale: { x: "independent", y: "independent"} },    
+          spec: {
+            width: 140,
+            height: 130,
+            autosize: { type: "none" },
+            config: { view: { stroke: null } },
+            layer: [
+              {
+                mark: { type: "arc", innerRadius: 20 ,outerRadius: 35},
+                encoding: {
+                  theta: {
+                    field: "Gender Percentage",
+                    type: "quantitative"
+                  },
+                  color: {
+                    field: "Gender",
+                    type: "nominal",
+                    scale: { 
+                      range: [
+                        "#B80065",      // dark pink
+                        "#120174"       // dark blue
+                      ] 
+                    },
+                    legend: { title: "Gender", titleFontSize: 16, labelFontSize: 15},
+                  },
+                  opacity: {
+                    condition: {
+                      test: "indexof(SelectedContinents, datum.Continent) >= 0 || indexof(SelectedContinents, 'Select All') >= 0",
+                      value: 1      
+                    },
+                    value: 0      
+                  },
+                  tooltip: [
+                    {field: "Continent",type: "nominal"},
+                    {field: "Gender",type: "nominal"},
+                    {field: "Gender Percentage",type: "quantitative", format: ".1f"}
+                ]
+                }
+              },
+              {
+                mark: { 
+                  type: "text", 
+                  radius: 50,
+                  fontSize: 14,
+                  fontWeight: "bold"
+                },
+                encoding: {
+                  theta: {
+                    field: "Gender Percentage",
+                    type: "quantitative",
+                    stack: true,
+    
+                  },
+                  text: {
+                    field: "Gender Percentage",
+                    type: "quantitative",
+                    format: ".1f"
+                  },
+                  color: {
+                    field: "Gender",
+                    type: "nominal",
+                    scale: { 
+                      range: [
+                        "#B80065",
+                        "#120174"
+                      ] 
+                    },
+                    legend: null
+                  },
+                  opacity: {
+                    condition: {
+                      test: "indexof(SelectedContinents, datum.Continent) >= 0 || indexof(SelectedContinents, 'Select All') >= 0",
+                      value: 1
+                    },
+                    value: 0
+                  },
+                }
+              }
+              
+            ]
+          }
+        },
+        
+        // mortality
+        {
+          data: { url: "multi_donutchart_mor_check_updt.csv" },
+          // transform: [
+          //   { filter: "indexof(SelectedContinents, 'Select All') >= 0 || indexof(SelectedContinents, datum.Continent) >= 0" }
+          // ],
+          columns: 3,
+          
+          facet: {
+              field: "Continent",
+              type: "nominal",
+              bounds: "flush",
+              header: {
+                title: "Continent (Mortality)",
+                titleFontSize: 14, 
+                labelFontSize: 13,
+                labelExpr: "indexof(SelectedContinents, 'Select All') >= 0 ? datum.label : (indexof(SelectedContinents, datum.value) >= 0 ? datum.label : '')"
+              }
+          },
+          spec: {
+            width: 140,
+            height: 130,
+            autosize: { type: "none" },
+            config: { view: { stroke: null } },
+            resolve: { scale: { x: "independent", y: "independent" } },
+            view: { continuousWidth: 600, continuousHeight: 300},
+            layer: [
+              {
+                mark: { type: "arc", innerRadius: 20, outerRadius: 35},
+                encoding: {
+                  theta: {
+                    field: "Gender Percentage",
+                    type: "quantitative"
+                  },
+                  color: {
+                    field: "Gender",
+                    type: "nominal",
+                    scale: { 
+                      range: [
+                        "#B80065",      // dark pink
+                        "#120174"       // dark blue
+                      ] 
+                    },
+                    legend: { title: "Gender", titleFontSize: 16, labelFontSize: 15}
+                  },
+                  opacity: {
+                    condition: {
+                      test: "indexof(SelectedContinents, datum.Continent) >= 0 || indexof(SelectedContinents, 'Select All') >= 0",
+                      value: 1
+                    },
+                    value: 0
+                  },
+                  tooltip: [
+                    {field: "Continent",type: "nominal"},
+                    {field: "Gender",type: "nominal"},
+                    {field: "Gender Percentage",type: "quantitative", format: ".1f"}
+                ]
+                }
+              },
+              {
+                mark: { 
+                  type: "text", 
+                  radius: 50,
+                  fontSize: 14,
+                  fontWeight: "bold"
+                },
+                encoding: {
+                  theta: {
+                    field: "Gender Percentage",
+                    type: "quantitative",
+                    stack: true
+                  },
+                  text: {
+                    field: "Gender Percentage",
+                    type: "quantitative",
+                    format: ".1f"
+                  },
+                  color: {
+                    field: "Gender",
+                    type: "nominal",
+                    scale: { 
+                      range: [
+                        "#B80065",
+                        "#120174"
+                      ] 
+                    },
+                    legend: null
+                  },
+                  opacity: {
+                    condition: {
+                      test: "indexof(SelectedContinents, datum.Continent) >= 0 || indexof(SelectedContinents, 'Select All') >= 0",
+                      value: 1
+                    },
+                    value: 0
+                  },
+                }
+              }
+              
+            ]
+          }
+        }, 
+      ]
+    },
         // Slope Graph
         {
-          width: 400,
-          height: 700,
+          width: 500,
+          height: 600,
           data: { url: "slope.csv" },
           config: {
             view: {
@@ -222,7 +390,7 @@
                 ],
 
               },
-              legend: { title: "Continent", titleFontSize: 13, labelFontSize: 11, orient: "right"}
+              legend: { title: "Continent", titleFontSize: 16, labelFontSize: 15, orient: "right"}
             }
           },
 
@@ -301,235 +469,12 @@
         ]
         },
         
-    ]
-      },
-        // multi donut chart
-        {
-          hconcat: [
-        {
-          vconcat: [
-        
-        // incidence
-        {
-          data: { url: "multi_donutchart_in_check_updt.csv" },
-          transform: [
-            { filter: "indexof(SelectedContinents, 'Select All') >= 0 || indexof(SelectedContinents, datum.Continent) >= 0" }
-          ],
-          columns: 3,
-          spacing: 0,
-          dx: 100,
-          
-          facet: {
-              field: "Continent",
-              type: "nominal",
-              header: {
-                title: "Continent (Incidence)",
-                titleFontSize: 14, 
-                labelFontSize: 13,
-                labelAlign: "center"   
-              }
-          },
-          spec: {
-            width: 140,
-            height: 130,
-            config: { view: { stroke: "red", padding: 0 } },
-            layer: [
-              {
-                mark: { type: "arc", innerRadius: 20 ,outerRadius: 35},
-                encoding: {
-                  theta: {
-                    field: "Gender Percentage",
-                    type: "quantitative"
-                  },
-                  color: {
-                    field: "Gender",
-                    type: "nominal",
-                    scale: { 
-                      range: [
-                        "#B80065",      // dark pink
-                        "#120174"       // dark blue
-                      ] 
-                    },
-                    legend: { title: "Gender", titleFontSize: 13, labelFontSize: 11, orient: "top"}
-                  },
-                  tooltip: [
-                    {field: "Continent",type: "nominal"},
-                    {field: "Gender",type: "nominal"},
-                    {field: "Gender Percentage",type: "quantitative", format: ".1f"}
-                ]
-                }
-              },
-              {
-                mark: { 
-                  type: "text", 
-                  radius: 50,
-                  fontSize: 14,
-                  fontWeight: "bold"
-                },
-                encoding: {
-                  theta: {
-                    field: "Gender Percentage",
-                    type: "quantitative",
-                    stack: true,
-    
-                  },
-                  text: {
-                    field: "Gender Percentage",
-                    type: "quantitative",
-                    format: ".1f"
-                  },
-                  color: {
-                    field: "Gender",
-                    type: "nominal",
-                    scale: { 
-                      range: [
-                        "#B80065",
-                        "#120174"
-                      ] 
-                    },
-                    legend: null
-                  }
-                }
-              }
-              
-            ]
-          }
-        },
-        
-        // mortality
-        {
-          data: { url: "multi_donutchart_mor_check_updt.csv" },
-          transform: [
-            { filter: "indexof(SelectedContinents, 'Select All') >= 0 || indexof(SelectedContinents, datum.Continent) >= 0" }
-          ],
-          columns: 3,
-          spacing: 0,
-          
-          facet: {
-              field: "Continent",
-              type: "nominal",
-              header: {
-                title: "Continent (Mortality)",
-                titleFontSize: 14, 
-                labelFontSize: 13,
-              }
-          },
-          spec: {
-            width: 140,
-            height: 130,
-            layer: [
-              {
-                mark: { type: "arc", innerRadius: 20, outerRadius: 35},
-                encoding: {
-                  theta: {
-                    field: "Gender Percentage",
-                    type: "quantitative"
-                  },
-                  color: {
-                    field: "Gender",
-                    type: "nominal",
-                    scale: { 
-                      range: [
-                        "#B80065",      // dark pink
-                        "#120174"       // dark blue
-                      ] 
-                    },
-                    legend: { title: "Gender", titleFontSize: 17, labelFontSize: 15 }
-                  },
-                  tooltip: [
-                    {field: "Continent",type: "nominal"},
-                    {field: "Gender",type: "nominal"},
-                    {field: "Gender Percentage",type: "quantitative", format: ".1f"}
-                ]
-                }
-              },
-              {
-                mark: { 
-                  type: "text", 
-                  radius: 50,
-                  fontSize: 14,
-                  fontWeight: "bold"
-                },
-                encoding: {
-                  theta: {
-                    field: "Gender Percentage",
-                    type: "quantitative",
-                    stack: true
-                  },
-                  text: {
-                    field: "Gender Percentage",
-                    type: "quantitative",
-                    format: ".1f"
-                  },
-                  color: {
-                    field: "Gender",
-                    type: "nominal",
-                    scale: { 
-                      range: [
-                        "#B80065",
-                        "#120174"
-                      ] 
-                    },
-                    legend: null
-                  }
-                }
-              }
-              
-            ]
-          }
-        }, 
-      
-      ]
-    
-    },
-    // text
-    {
-      title: {
-        text: [
-          "Global Cancer Incidence and Mortaility",
-          "Cases By Gender and Continent (2022)"
-        ],
-        fontSize: 20,
-        anchor: "start",
-        color: "#3d0477",
-        offset: 20,
-        dy: 200,
-        dx: 100
-      },
-      width: 500,
-      height: 100,
-      data: { values: [{}] }, 
-      mark: {
-        type: "text",
-        align: "left",
-        baseline: "middle",
-        fontSize: 14,
-        color: "#3d0477",
-        lineBreak: "auto",  
-        lineHeight: 18,
-        limit: 400         
-      },
-      encoding: {
-        x: { value: 100 }, 
-        y: { value: 200 },
-        text: {
-          value:
-            ["This visualization compares cancer incidence and mortality ",
-            "by gender across continents in 2022. Overall, females show ",
-            "slightly higher proportions of cancer cases in most regions, ",
-            "particularly in Africa and North America. Mortality patterns ",
-            "follow a similar trend, indicating consistent gender-based ",
-            "outcomes. Oceania and South America exhibit nearly equal ",
-            "distributions between males and females. The close alignment ",
-            "between incidence and mortality suggests similar treatment ",
-            "access and survival outcomes across genders globally."
-          ]
-        }
-      }
+    ],
+    resolve: {
+      scale: { color: "independent" },
+      legend: { color: "independent" }
     }
-  ],
-  autosize: { type: "fit", contains: "content" }
-  }
+      },
       
 ]
     };
@@ -538,61 +483,22 @@
     var v2Spec = {
       $schema: "https://vega.github.io/schema/vega-lite/v6.json",
       background: "#e5cefcfe",
-      hconcat: [
-        // text
-      {
-        title: {
-          text: ["Cancer Incidence and Mortality Cases", "by Cancer Type (2022)"],
-          fontSize: 20,
-          anchor: "start",
-          color: "#3d0477",
-          offset: 20,
-          dy: 300
-        },
-        width: 500,
-        height: 600,
-        data: { values: [{}] }, 
-        mark: {
-          type: "text",
-          align: "left",
-          baseline: "middle",
-          fontSize: 14,
-          color: "#3d0477",
-          lineBreak: "auto",  
-          lineHeight: 18,
-          limit: 500         
-        },
-        encoding: {
-          x: { value: 0 }, 
-          y: { value: 300 },
-          text: {
-            value:
-              ["This visualization compares global cancer incidence and ",
-              "mortality in 2022. Lung, breast, and colorectal cancers  ",
-              "have the highest overall burden, while thyroid and prostate",
-              "show better survival outcomes. The shorter gaps between ",
-              "incidence and mortality in liver and pancreatic cancers ",
-              "indicate poorer prognoses globally."
-            ]
-          }
-        }
-      },
-
+      vconcat: [
         {
           data: { url: "dot_plot_data_check.csv" },
-          width: 240,
+          width: 895,
           height: 600,
           encoding: {
             y: {
               field: "Cancer Type",
               type: "nominal",
-              axis: { title: "Cancer Type", labelFontSize: 11, titleFontSize: 13 },
+              axis: { title: "Cancer Type", labelFontSize: 16, titleFontSize: 15 },
               sort: { field: "Number of Cases", op: "max", order: "descending" }
             },
             x: {
               field: "Number of Cases",
               type: "quantitative",
-              axis: { title: "Number of Cases", labelFontSize: 11, titleFontSize: 13, format: ",", grid: false },
+              axis: { title: "Number of Cases (logarithm scale) ", labelFontSize: 16, titleFontSize: 15, format: ",", grid: false },
               scale: { type: "log" },
             }
           },
@@ -610,9 +516,12 @@
                   type: "nominal",
                   scale: {
                     domain: ["Incidence", "Mortality"],
-                    range: ["#1D0075", "#74010F"]
+                    range: [
+                      "#24524A", 
+                      "#AD1D00"
+                    ]
                   },
-                  legend: { title: "Type of Cases", titleFontSize: 13, labelFontSize: 11, labels: ["Incidence, Mortality"]}
+                  legend: { title: "Type of Cases", titleFontSize: 16, labelFontSize: 15, labels: ["Incidence, Mortality"]}
                 },
                 tooltip: [
                   { field: "Cancer Type", type: "nominal", title: "Cancer type" },
