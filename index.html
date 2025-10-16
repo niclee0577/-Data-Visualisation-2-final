@@ -80,20 +80,28 @@
           // Ocean Backgrond
           {
             data:{
-              values: [{type: "Sphere"}]
+              url: "ne_10m_ocean.json",
+              format: {
+                type: "topojson",
+                feature: "ne_10m_ocean"
+              }
             },
-            mark: {type: "geoshape", fill:"#cce6ff" }
+            mark: {type: "geoshape", fill:"skyblue" }
           },
 
           //graticule grid
           {
-            data: {
-              graticule: {}
+            data:{
+              url: "ne_10m_graticules_30.json",
+              format: {
+                type: "topojson",
+                feature: "ne_10m_graticules_30"
+              }
             },
             mark: {
               type: "geoshape",
-              stroke: "#d1d1d1",
-              strokeWidth: 0.5
+              fill: null,
+              stroke: "lightgrey",
             },
             projection: {type: "equalEarth"}
           },
