@@ -501,11 +501,11 @@
             {
               mark: {
               type: "group",
-              transform: [{ translate: [0, -100] }]
+              transform: [{ translate: [0, 0] }]
             },
             encoding: {
             x: { 
-                field: "Measure",
+                field: "Type_of_Cases",
                 type: "nominal",
                 sort: ["Incidence","Mortality"],
                 axis: {
@@ -561,7 +561,7 @@
                 color: { field: "Continent", type: "nominal" },
                 tooltip: [
                     { field: "Continent", type: "nominal" },
-                    { field: "Measure", type: "nominal" },
+                    { field: "Type_of_Cases", type: "nominal" },
                     { field: "Cancer ASR rate", type: "quantitative" }
                 ]
               }
@@ -569,11 +569,11 @@
           {
               transform: [
                   {
-                        calculate: "datum.Measure == 'Mortality' ? 10: -50",
+                        calculate: "datum.Type_of_Cases == 'Mortality' ? 10: -50",
                         as: "labelOffsetdx"
                     },
                     {
-                        calculate: "datum.Measure == 'Mortality' ? (datum.Continent == 'Europe' ? -7: datum.Continent == 'Oceania' ? -6 : datum.Continent == 'North America' ? 9 : datum.Continent == 'South America' ? -10 : datum.Continent == 'Asia' ? -5 : datum.Continent == 'Africa' ? 22 : 0) : (datum.Continent == 'Europe' ? -5 : datum.Continent == 'Oceania' ? -5 : datum.Continent == 'North America' ? -10 : datum.Continent == 'South America' ? 0 : datum.Continent == 'Asia' ? -5 : datum.Continent == 'Africa' ? -5 : 0)",
+                        calculate: "datum.Type_of_Cases == 'Mortality' ? (datum.Continent == 'Europe' ? -7: datum.Continent == 'Oceania' ? -6 : datum.Continent == 'North America' ? 9 : datum.Continent == 'South America' ? -10 : datum.Continent == 'Asia' ? -5 : datum.Continent == 'Africa' ? 22 : 0) : (datum.Continent == 'Europe' ? -5 : datum.Continent == 'Oceania' ? -5 : datum.Continent == 'North America' ? -10 : datum.Continent == 'South America' ? 0 : datum.Continent == 'Asia' ? -5 : datum.Continent == 'Africa' ? -5 : 0)",
                         as: "labelOffsetdy"
                     }
                 ],
@@ -587,7 +587,7 @@
                     fontWeight: "bold"
                 },
                 encoding: {
-                    x: { field: "Measure", type: "nominal" },
+                    x: { field: "Type_of_Cases", type: "nominal" },
                     y: { field: "Cancer ASR rate", type: "quantitative" },
                     text: { field: "Cancer ASR rate", type: "quantitative", format: ".1f" },
                     color: { field: "Continent", type: "nominal" },
