@@ -565,7 +565,7 @@
                         as: "labelOffsetdx"
                     },
                     {
-                        calculate: "datum.Measure == 'Mortality' ? (datum.Continent == 'Europe' ? -7: datum.Continent == 'Oceania' ? -6 : datum.Continent == 'North America' ? 10 : datum.Continent == 'South America' ? -5 : datum.Continent == 'Asia' ? -3 : datum.Continent == 'Africa' ? 20 : 0) : (datum.Continent == 'Europe' ? -5 : datum.Continent == 'Oceania' ? -5 : datum.Continent == 'North America' ? -10 : datum.Continent == 'South America' ? -5 : datum.Continent == 'Asia' ? -5 : datum.Continent == 'Africa' ? -5 : 0)",
+                        calculate: "datum.Measure == 'Mortality' ? (datum.Continent == 'Europe' ? -7: datum.Continent == 'Oceania' ? -6 : datum.Continent == 'North America' ? 9 : datum.Continent == 'South America' ? -10 : datum.Continent == 'Asia' ? -5 : datum.Continent == 'Africa' ? 22 : 0) : (datum.Continent == 'Europe' ? -5 : datum.Continent == 'Oceania' ? -5 : datum.Continent == 'North America' ? -10 : datum.Continent == 'South America' ? 0 : datum.Continent == 'Asia' ? -5 : datum.Continent == 'Africa' ? -5 : 0)",
                         as: "labelOffsetdy"
                     }
                 ],
@@ -672,8 +672,10 @@
             }
           }
         },
+        
+        // text slope
         {
-          // text slope
+          
           title: {
             text: [
               "Global Cancer Incidence and Mortaility Rate By ",
